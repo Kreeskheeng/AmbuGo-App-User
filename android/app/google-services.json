@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "408913983763",
+    "project_id": "fast-ambulance-go-app",
+    "storage_bucket": "fast-ambulance-go-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408913983763:android:ba0b68713b6ad81f5cc2e6",
+        "android_client_info": {
+          "package_name": "com.fast.ambulanceGo.App"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408913983763-l3639a1ktdgtdhnmb56a7p1i20h9v40r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fast.ambulanceGo.App",
+            "certificate_hash": "7fe3662f64d1dd306cea5392952144d841e9600d"
+          }
+        },
+        {
+          "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZWolq9zWAH139YK8Zi9WmouYplE_sFcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
