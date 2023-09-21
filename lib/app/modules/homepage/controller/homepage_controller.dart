@@ -12,6 +12,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:last_minute/helper/loading.dart';
 import 'package:last_minute/helper/shared_preference.dart';
 import 'package:location/location.dart';
+import 'package:flutter/material.dart';
+
+
+
+
 
 class HomepageController extends GetxController {
   RxBool isLoading = true.obs;
@@ -27,6 +32,56 @@ class HomepageController extends GetxController {
   onChangedselectedAddress(String addressLocation) {
     selectedAddress!(addressLocation);
   }
+
+
+  var currentMapType = Rx<MapType>(MapType.normal);
+
+  void toggleMapType() {
+    currentMapType.value = (currentMapType.value == MapType.normal)
+        ? MapType.satellite
+        : MapType.normal;
+  }
+
+   //ride
+  final _rideFare = ''.obs; // Store the ride fare
+  String get rideFare => _rideFare.value;
+
+  @override
+  void onReady() {
+    // ... (your existing code)
+
+    // Retrieve the ride fare from Firebase and update the _rideFare observable
+    retrieveRideFare();
+
+    super.onReady();
+  }
+
+  // Retrieve the ride fare from Firebase
+  void retrieveRideFare() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> rideInfoDoc =
+      await FirebaseFirestore.instance
+          .collection('bookings')
+          .doc(SPController().getUserId())
+          .get();
+      String rideFare = rideInfoDoc['rideFare'].toString(); // Change the field name as per your Firestore structure
+      print('Retrieved ride fare: $rideFare');
+
+      _rideFare(rideFare);
+
+      if (rideInfoDoc['ambulanceStatus'] == 'completed') {
+        // Navigate to the ride_fare page
+        Get.offNamed('');
+      } else {
+        // Generate and display QR code for ride fare
+        //displayQRCodeInPanel(rideFare);
+      }
+    } catch (e) {
+      print('Error retrieving ride fare: $e');
+    }
+  }
+
+
 
   //nextPage
   ambulanceBookedBool(bool x) {
@@ -46,7 +101,6 @@ class HomepageController extends GetxController {
       emtDoc=await FirebaseFirestore.instance.collection('staff').doc(emtId).get();
       
       update();
-      print(emtDoc['name']);
     }
     
     update();
@@ -56,18 +110,28 @@ class HomepageController extends GetxController {
   bool get ambulanceBooked => _ambulanceBooked.value;
   onAmbulanceBooked(bool x) async {
     LoadingUtils.showLoader();
+
+    String userId = SPController().getUserId();
+
+    // Fetch the user's name from the "users" collection
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get();
+
+    String userName = userSnapshot.get('name');
+
     await FirebaseFirestore.instance
         .collection('bookings')
-        .doc(SPController().getUserId())
+        .doc(userId)
         .set({
-
-        'userId':SPController().getUserId(),
-
+      'userId': userId,
+      'userName': userName, // Include the user's name
       'ambulanceStatus': 'not assigned',
       'location': {
         "lat": currentLocation!.latitude,
         "lng": currentLocation!.longitude,
-        'time':''
+        'time': DateTime.now().toString(),
       },
       'rideKey':'',
       'ambulanceDetails': {
@@ -84,8 +148,10 @@ class HomepageController extends GetxController {
         'hospitalType': 'Private and Public',
         'emergencyType': []
       },
-      'medicalReport':{}
+      'medicalReport':{},
+      'nearest hospital':{}
     });
+
     LoadingUtils.hideLoader();
     _ambulanceBooked(x);
   }
@@ -113,7 +179,7 @@ class HomepageController extends GetxController {
     location.getLocation().then(
           (location) async {
         currentLocation = location;
-        latLng.add(LatLng(currentLocation!.latitude!,currentLocation!.longitude!));
+        latLng.add(LatLng(currentLocation!.latitude!, currentLocation!.longitude!));
         log("Got Current Location");
         isLoading.value = false;
       },
@@ -122,12 +188,11 @@ class HomepageController extends GetxController {
       currentLocation = newLoc;
       //googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(newLoc.latitude!,newLoc.longitude!))));
       update();
-      
-      if(ambulanceBooked){
-         getPolyPoints();
-        onUpdateLocationFirebase();
-      }
-      else{
+
+      if (ambulanceBooked) {
+        getPolyPoints();
+        onUpdateLocationFirebase(DateTime.now().toString()); // Capture current time and date
+      } else {
         onCameraIdle();
       }
     });
@@ -166,18 +231,16 @@ class HomepageController extends GetxController {
   final _time=''.obs;
   String get time=>_time.value;
 
-  onUpdateLocationFirebase()async{
-    //RepoResponse<DistanceMatrix> response=await repo.getDistance(currentLocation!.latitude!, currentLocation!.longitude!, destinationLocation.latitude, destinationLocation.longitude);
-    //_time(response.data!.rows![0].elements![0].duration!.text!);
+  onUpdateLocationFirebase(String currentTime) async {
     FirebaseFirestore.instance.collection('bookings').doc(SPController().getUserId()).update({
-        'location':{
-          'time':time,
-        'lat':currentLocation!.latitude,
-        'lng':currentLocation!.longitude,
-        }
+      'location': {
+        'time': currentTime, // Use the provided current time and date
+        'lat': currentLocation!.latitude,
+        'lng': currentLocation!.longitude,
       }
-    );
+    });
   }
+
 
   final _ambulanceAssigned=false.obs;
   bool get ambulanceAssigned=>_ambulanceAssigned.value;
@@ -186,14 +249,16 @@ class HomepageController extends GetxController {
     _ambulanceAssigned(x);
   }
 
-  onGetPatientLocation(double lat,double lng) async {
-    
-    
-    _destinationLocation(LatLng(lat,
-        lng));
-        //_bookedPatientId(userId);
+  onGetPatientLocation(double lat, double lng) async {
+    _destinationLocation(LatLng(lat, lng));
     getPolyPoints();
-    //_ambulanceAssigned(true);
-    //onUpdateLocationFirebase();
+    _ambulanceAssigned(true);
+
+    // Update the ambulance's location with the current time and date
+    onUpdateLocationFirebase(DateTime.now().toString());
+
+    getPolyPoints();
+    _ambulanceAssigned(true);
   }
+
 }

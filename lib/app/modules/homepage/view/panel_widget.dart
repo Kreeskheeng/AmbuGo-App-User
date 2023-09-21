@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
 import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:last_minute/helper/shimmer.dart';
+import 'dart:ui';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/dimensions.dart';
@@ -16,6 +17,9 @@ class PanelWidget extends GetView<HomepageController> {
    PanelWidget({
     super.key,
   });
+
+
+// ...
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +34,20 @@ class PanelWidget extends GetView<HomepageController> {
               height: Dimensions.height18,
             ),
             Obx(
-              () => controller.selectedAddress?.value == 'Loading'
+                  () => controller.selectedAddress?.value == 'Loading'
                   ? Column(
-                      children: const [
-                        CustomShimmer.rectangular(height: 22),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        CustomShimmer.rectangular(height: 22)
-                      ],
-                    )
+                children: const [
+                  CustomShimmer.rectangular(height: 22),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  CustomShimmer.rectangular(height: 22)
+                ],
+              )
                   : BigText(
-                      text: controller.selectedAddress!.value,
-                      maxLines: 3,
-                    ),
+                text: controller.selectedAddress!.value,
+                maxLines: 3,
+              ),
             ),
             SizedBox(
               height: Dimensions.height30,
@@ -52,16 +56,59 @@ class PanelWidget extends GetView<HomepageController> {
               on_pressed: () {
                 controller.onAmbulanceBooked(true);
                 //ambulanceController.onInformationUpdated(false);
-                
+
               },
               text: 'BOOK AMBULANCE',
               radius: Dimensions.radius20 * 2,
               width: double.maxFinite,
               color: AppColors.pink,
             ),
+
           ],
         ),
       ),
     );
   }
+
 }
+
+
+/*
+Container(
+width: double.maxFinite,
+height: Dimensions.radius20 * 4,
+decoration: BoxDecoration(
+borderRadius: BorderRadius.circular(Dimensions.radius20 * 2),
+boxShadow: [
+BoxShadow(
+color: Colors.black.withOpacity(0.1),
+blurRadius: 16,
+spreadRadius: 0,
+offset: Offset(0, 4),
+),
+],
+),
+child: ClipRRect(
+borderRadius: BorderRadius.circular(Dimensions.radius20 * 2),
+child: BackdropFilter(
+filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+child: ElevatedButton(
+onPressed: () {
+controller.onAmbulanceBooked(true);
+ambulanceController.onInformationUpdated(false);
+},
+style: ElevatedButton.styleFrom(
+primary: Colors.pink.withOpacity(0.2),
+onPrimary: Colors.pinkAccent,
+padding: EdgeInsets.all(16),
+),
+child: const Text(
+'BOOK AMBULANCE',
+style: TextStyle(fontSize: 16),
+),
+),
+),
+),
+)
+
+ */

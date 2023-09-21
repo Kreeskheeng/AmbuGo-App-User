@@ -23,7 +23,6 @@ class CreateProfileController extends GetxController {
         "address": address.text,
         "phone":phoneNumber.text,
         "city":city.text,
-        "state":state.text
       }).then((value) {
         LoadingUtils.hideLoader();
         Homepage.launch();

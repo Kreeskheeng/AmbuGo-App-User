@@ -5,17 +5,55 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
 import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:last_minute/app/modules/pay_stack/main.dart';
 import 'package:last_minute/helper/shared_preference.dart';
 import 'package:last_minute/utils/colors.dart';
 import 'package:last_minute/utils/dimensions.dart';
 import 'package:last_minute/widgets/big_text.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../widgets/button.dart';
+
+
 
 class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
   HomepageController homepageController = Get.find();
   ScrollController scrollController;
   AmbulanceDetails({super.key, required this.scrollController});
+
+  void _launchPhoneCall(String phoneNumber) async {
+    final url = 'tel:$phoneNumber';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // Handle error: unable to launch the phone call.
+      print('Error launching phone call');
+    }
+  }
+
+  void retrieveRideInfo() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> rideInfoDoc =
+      await FirebaseFirestore.instance
+          .collection('bookings')
+          .doc(SPController().getUserId())
+          .get();
+
+      String rideKey = rideInfoDoc.id; // Document ID is the rideKey
+      String time = rideInfoDoc['time'].toString(); // Change the field name as per your Firestore structure
+
+      print('Retrieved ride key: $rideKey');
+      print('Retrieved time: $time');
+
+      // Call the appropriate function to handle rideKey and time
+      //_handleRideInfo(rideKey, time);
+
+    } catch (e) {
+      print('Error retrieving ride info: $e');
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +125,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                   ),
                                   Button(
                         on_pressed: () {},
-                        text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['time']}',
+                        text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['t']}',
                         color: AppColors.black,
                         textColor: AppColors.white,
                         width: Dimensions.width40 * 6,
@@ -115,15 +153,14 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                   height: Dimensions.height15,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     BigText(
                                       text: 'Date Of Ride  ',
                                       size: Dimensions.font15 * 1.2,
                                     ),
                                     BigText(
-                                      text: controller.dateOfRide.value,
+                                      text: controller.dateOfRide.value, // Update this line
                                       size: Dimensions.font15 * 1.2,
                                     )
                                   ],
@@ -132,19 +169,19 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                   height: Dimensions.height15,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     BigText(
-                                      text: 'Ride Id  ',
+                                      text: 'Ride key  ',
                                       size: Dimensions.font15 * 1.2,
                                     ),
                                     BigText(
-                                      text: controller.rideId.value,
+                                      text: controller.rideId.value, // Update this line
                                       size: Dimensions.font15 * 1.2,
                                     )
                                   ],
                                 ),
+
                                 const Divider(
                                   thickness: 1,
                                   color: AppColors.lightGrey,
@@ -250,11 +287,15 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                       ],
                                     ),
                                     IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.phone,
-                                          color: AppColors.pink,
-                                        ))
+                                      onPressed: () {
+                                        _launchPhoneCall(homepageController.driverDoc['mobileNumber']);
+                                      },
+                                      icon: const Icon(
+                                        Icons.phone,
+                                        color: AppColors.pink,
+                                      ),
+                                    )
+
                                   ],
                                 ),
                                 const Divider(
@@ -309,7 +350,12 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                       width: double.maxFinite,
                       height: Dimensions.height40 * 1.5,
                       radius: Dimensions.radius20 * 2,
-                      on_pressed: () {},
+                on_pressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  PayStack(initialEmail: 'ckamoga23@gmail.com', initialPrice: 500,) ),
+                  );
+                },
                       text: 'FIRST AID',
                       color: AppColors.pink,
                     )

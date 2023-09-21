@@ -172,9 +172,9 @@ class LogIn extends GetView<LogInController> {
                                     border: InputBorder.none,
                                     prefixIcon: Icon(
                                       Icons.phone,
-                                      color: AppColors.pink,
+                                      color: AppColors.indigo,
                                     ),
-                                    hintText: 'Mobile Number',
+                                    hintText: 'Enter Mobile Number: 7***',
                                   ),
                                 )),
                           ),

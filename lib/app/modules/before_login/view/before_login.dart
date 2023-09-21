@@ -31,7 +31,7 @@ class FirstPage extends StatelessWidget {
                             padding: EdgeInsets.all(8.0),
                             child: Divider(thickness: 2,color: AppColors.black,),
                           )),
-                          BigText(text: 'Last Minute',size: Dimensions.font20*1.8,),
+                          BigText(text: 'AmbuGo App',size: Dimensions.font20*1.8,),
                           const Expanded(child: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Divider(thickness: 2,color: AppColors.black,),

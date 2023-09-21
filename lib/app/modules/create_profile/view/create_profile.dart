@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:last_minute/app/modules/create_profile/controller/create_profile_controller.dart';
+import 'package:last_minute/app/modules/login/view/login.dart';
+import 'package:last_minute/app/modules/login/view/login.dart';
+import 'package:last_minute/app/modules/login/view/login.dart';
 import 'package:last_minute/helper/snackbar.dart';
 import 'package:last_minute/utils/colors.dart';
 import 'package:last_minute/widgets/big_text.dart';
@@ -8,7 +11,55 @@ import 'package:last_minute/widgets/big_text.dart';
 import '../../../../utils/dimensions.dart';
 import '../../../../widgets/button.dart';
 import '../../../../widgets/text_field.dart';
+import '../../login/view/login.dart';
+class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final VoidCallback onNotificationPressed;
+  final VoidCallback onLogoutPressed;
 
+  TransparentAppBar({
+    required this.title,
+    required this.onNotificationPressed,
+    required this.onLogoutPressed,
+
+
+  });
+
+  @override
+  Size get preferredSize => Size.fromHeight(60.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      title: Row(
+        children: [
+          Image.asset(
+            'assets/images/ambugo.jpg', // Update with your logo image path
+            width: 45,
+            height: 45,
+          ),
+          SizedBox(width: 4.0), // Add some spacing between logo and text
+          Text(
+            title,
+            style: const TextStyle(
+              color: AppColors.pink,
+              fontFamily: 'RedHat',
+              fontWeight: FontWeight.bold,
+              fontSize: 28.6,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+
+
+      ],
+    );
+
+  }
+}
 class CreateProfile extends GetView<CreateProfileController> {
   static const route = '/createprofile';
   static launch() => Get.toNamed(route);
@@ -17,6 +68,16 @@ class CreateProfile extends GetView<CreateProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TransparentAppBar(
+        title: "AmbuLance Go",
+        onNotificationPressed: () {
+          // TODO: Handle notification button press
+          // Implement your notification logic here
+        },
+        onLogoutPressed: () {
+
+        },
+      ),
       body: SizedBox(
         width: Dimensions.screenWidth,
         height: Dimensions.screenHeight,
@@ -31,14 +92,13 @@ class CreateProfile extends GetView<CreateProfileController> {
                 child: Column(
 
                   children: [
-
                     BigText(
-                      text: 'We are on the Way to save lives',
-                      maxLines: null,
-                      size: Dimensions.font20 * 2,
-                      color: AppColors.grey,
-                    ),
-                    SizedBox(height: Dimensions.height40*5,),
+                    text: 'Create Profile to continue!',
+                    maxLines: null,
+                    size: Dimensions.font20 * 1.7,
+                    color: AppColors.grey,
+                  ),
+                    SizedBox(height: Dimensions.height40,),
                     Column(
                       children: [
                         Text_Field(
@@ -50,8 +110,8 @@ class CreateProfile extends GetView<CreateProfileController> {
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 prefixIcon: Icon(
-                                  Icons.phone,
-                                  color: AppColors.pink,
+                                  Icons.person_2_outlined,
+                                  color: AppColors.indigo,
                                 ),
                                 hintText: 'Name',
                               ),
@@ -71,32 +131,15 @@ class CreateProfile extends GetView<CreateProfileController> {
                                   decoration: const InputDecoration(
                                     border: InputBorder.none,
                                     prefixIcon: Icon(
-                                      Icons.phone,
-                                      color: AppColors.pink,
+                                      Icons.location_history,
+                                      color: AppColors.indigo,
                                     ),
                                     hintText: 'Address',
                                   ),
                                 ),
                               ),
                             )),
-                        SizedBox(
-                          height: Dimensions.height20,
-                        ),
-                        Text_Field(
-                            radius: Dimensions.radius20,
-                            text_field_width: double.maxFinite,
-                            text_field_height: Dimensions.height20 * 3,
-                            text_field: TextField(
-                              controller: controller.state,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                prefixIcon: Icon(
-                                  Icons.phone,
-                                  color: AppColors.pink,
-                                ),
-                                hintText: 'State',
-                              ),
-                            )),
+
                         SizedBox(
                           height: Dimensions.height20,
                         ),
@@ -109,8 +152,8 @@ class CreateProfile extends GetView<CreateProfileController> {
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 prefixIcon: Icon(
-                                  Icons.phone,
-                                  color: AppColors.pink,
+                                  Icons.location_city_sharp,
+                                  color: AppColors.indigo,
                                 ),
                                 hintText: 'City',
                               ),
@@ -128,7 +171,7 @@ class CreateProfile extends GetView<CreateProfileController> {
                                 border: InputBorder.none,
                                 prefixIcon: Icon(
                                   Icons.phone,
-                                  color: AppColors.pink,
+                                  color: AppColors.indigo,
                                 ),
                                 hintText: 'Phone Number',
                               ),
@@ -147,9 +190,7 @@ class CreateProfile extends GetView<CreateProfileController> {
                             else if(controller.address.text.isEmpty){
                               snackbar('Kindly enter your address');
                             }
-                            else if(controller.state.text.isEmpty){
-                              snackbar('Kindly enter your state');
-                            }
+
                             else if(controller.city.text.isEmpty){
                               snackbar('Kindly enter your city');
                             }

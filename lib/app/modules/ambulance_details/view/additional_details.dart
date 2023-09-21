@@ -13,12 +13,26 @@ import '../../../../widgets/big_text.dart';
 import '../../../../widgets/button.dart';
 import '../../../../widgets/drop_down.dart';
 import '../../../../widgets/text_field.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class AdditionalData extends GetView<AmbulanceDetailsController> {
   HomepageController homepageController=Get.find();
   ScrollController scrollController;
   AdditionalData({super.key, required this.scrollController});
- 
+
+
+  void _launchPhoneCall(String phoneNumber) async {
+    final url = 'tel:$phoneNumber';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      // Handle error: unable to launch the phone call.
+      print('Error launching phone call');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -108,18 +122,18 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                       color: AppColors.white,
                                     )),
                                   ),
-                      //             SizedBox(
-                      //               height: Dimensions.height20 * 1.5,
-                      //             ),
-                      //             Button(
-                      //   on_pressed: () {},
-                      //   text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['time']}',
-                      //   color: AppColors.black,
-                      //   textColor: AppColors.white,
-                      //   width: Dimensions.width40 * 6,
-                      //   height: Dimensions.height40 * 1.1,
-                      //   textSize: Dimensions.font20 * 0.8,
-                      // ),
+                                   SizedBox(
+                                     height: Dimensions.height20 * 1.5,
+                                   ),
+                                   Button(
+                         on_pressed: () {},
+                         text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['time']}',
+                         color: AppColors.black,
+                         textColor: AppColors.white,
+                         width: Dimensions.width40 * 6,
+                         height: Dimensions.height40 * 1.1,
+                         textSize: Dimensions.font20 * 0.8,
+                       ),
                                   const Divider(
                                     thickness: 1,
                                     color: AppColors.lightGrey,
@@ -162,11 +176,15 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                         ],
                                       ),
                                       IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.phone,
-                                            color: AppColors.pink,
-                                          ))
+                                        onPressed: () {
+                                          _launchPhoneCall(homepageController.driverDoc['mobileNumber']);
+                                        },
+                                        icon: const Icon(
+                                          Icons.phone,
+                                          color: AppColors.pink,
+                                        ),
+                                      )
+
                                     ],
                                   ),
                                   const Divider(
