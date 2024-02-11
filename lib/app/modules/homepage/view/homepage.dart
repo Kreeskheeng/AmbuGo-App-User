@@ -1,93 +1,30 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
-import 'package:last_minute/app/modules/ambulance_details/view/additional_details.dart';
-import 'package:last_minute/app/modules/ambulance_details/view/ambulance_details.dart';
-import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:last_minute/app/modules/homepage/view/home.dart';
 import 'package:last_minute/app/modules/homepage/view/panel_widget.dart';
 import 'package:last_minute/app/modules/login/view/login.dart';
+import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
+import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:last_minute/app/modules/ambulance_details/view/additional_details.dart';
+import 'package:last_minute/app/modules/ambulance_details/view/ambulance_details.dart';
 import 'package:last_minute/app/modules/pay_stack/main.dart';
-import 'package:last_minute/app/modules/qr/QR%20Generator/QRGenerator.dart';
 import 'package:last_minute/app/modules/wallet/main.dart';
+import 'package:last_minute/helper/snackbar.dart';
 import 'package:last_minute/utils/colors.dart';
 import 'package:last_minute/utils/dimensions.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:last_minute/helper/snackbar.dart'; // Import your snackbar function
-import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
-import 'package:glassmorphism/glassmorphism.dart';
-import 'package:last_minute/app/modules/pay_stack/Payment/paystack_payment_page.dart';
-import 'package:shimmer/shimmer.dart';
-
-
-
-
-// Define the TransparentAppBar class
-class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final VoidCallback onNotificationPressed;
-  final VoidCallback onLogoutPressed;
-
-  TransparentAppBar({
-    required this.title,
-    required this.onNotificationPressed,
-    required this.onLogoutPressed,
-
-
-  });
-
-  @override
-  Size get preferredSize => Size.fromHeight(56.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      title: Row(
-        children: [
-          Image.asset(
-            'assets/images/ambugo.jpg', // Update with your logo image path
-            width: 40,
-            height: 40,
-          ),
-          SizedBox(width: 2.0), // Add some spacing between logo and text
-          Text(
-            title,
-            style: const TextStyle(
-              color: AppColors.pink,
-              fontFamily: 'RedHat',
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.notifications, color: Colors.indigo),
-          onPressed: onNotificationPressed,
-        ),
-        IconButton(
-          icon: Icon(Icons.logout, color: Colors.indigo),
-          onPressed:onNotificationPressed,
-        ),
-      ],
-    );
-
-  }
-}
 
 
 
 class Homepage extends GetView<HomepageController> {
+  final AdvancedDrawerController _advancedDrawerController = AdvancedDrawerController(); // Define AdvancedDrawerController
   AmbulanceDetailsController ambulanceController = Get.find();
   Completer<GoogleMapController> mapController = Completer();
   var currentMapType = Rx<MapType>(MapType.normal);
-
 
   void toggleMapType() {
     currentMapType.value = (currentMapType.value == MapType.normal)
@@ -98,220 +35,323 @@ class Homepage extends GetView<HomepageController> {
   static const route = '/homepage';
   bool booked = false;
 
-
-  Homepage({super.key, this.booked = false});
+  Homepage({Key? key, this.booked = false}) : super(key: key); // Define key parameter in constructor
 
   static launch() => Get.toNamed(route);
 
-
-  final panelController = PanelController();
+  final PanelController panelController = PanelController();
 
   void _onMapCreated(GoogleMapController controller) {
     mapController.complete(controller);
   }
-
-
-
+  void _handleMenuButtonPressed() {
+    _advancedDrawerController.showDrawer();
+  }
 
   @override
   Widget build(BuildContext context) {
     controller.ambulanceBookedBool(booked);
-    return MaterialApp(
-      home: Scaffold(
-        appBar: TransparentAppBar(
-          title: " AmbuLance Go.",
-          onNotificationPressed: () {
-            // TODO: Handle notification button press
-            // Implement your notification logic here
-          },
-          onLogoutPressed: () {
+    return AdvancedDrawer(
+      backdropColor: Colors.indigo.shade700,
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      animateChildDecoration: true,
+      rtlOpening: false,
+      disabledGestures: false,
+      childDecoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade900,
+            blurRadius: 20.0,
+            spreadRadius: 5.0,
+            offset: Offset(-20.0, 0.0),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      drawer: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(top: 20),
+          child: ListTileTheme(
+            textColor: Colors.white,
+            iconColor: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 80.0,
+                  height: 80.0,
+                  margin: EdgeInsets.only(
+                    left: 20,
+                    top: 24.0,
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade800,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Image.asset('assets/images/king.jpg'),
+                ),
+                SizedBox(height: 10,),
+                Padding(
+                  padding: EdgeInsets.only(left: 30.0),
+                  child: Text(
+                    "Krees Kheeng",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Spacer(),
+                Divider(color: Colors.white70,),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(Iconsax.home),
+                  title: Text('Dashboard'),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(Iconsax.chart_2),
+                  title: Text('Analytics'),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(Iconsax.profile_2user),
+                  title: Text('Contacts'),
+                ),
+                SizedBox(height: 50,),
+                Divider(color: Colors.grey.shade800),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(Iconsax.setting_2),
+                  title: Text('Settings'),
+                ),
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(Iconsax.support),
+                  title: Text('Support'),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text('                      Ambulance Go Inc.',
+                    style: TextStyle(color: Colors.grey.shade500),),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      child: Scaffold(appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+
+          color: Colors.indigo,
+          onPressed: _handleMenuButtonPressed,
+          icon: ValueListenableBuilder<AdvancedDrawerValue>(
+
+
+            valueListenable: _advancedDrawerController,
+            builder: (_, value, __) {
+              return AnimatedSwitcher(
+                duration: Duration(milliseconds: 250),
+                child: Icon(
+                  value.visible ? Iconsax.close_square : Iconsax.menu,
+                  key: ValueKey<bool>(value.visible),
+                ),
+              );
+            },
+          ),
+        ),
+
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/ambugo.jpg',
+              width: 40,
+              height: 40,
+            ),
+            SizedBox(width: 2.0),
+            Text(
+              'Ambulance Go',
+              style: TextStyle(
+                color: Colors.pink,
+                fontFamily: 'RedHat',
+                fontWeight: FontWeight.bold,
+                fontSize: 27,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Iconsax.notification,
+              color: Colors.indigo,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
+        body: SafeArea(
+          child: Obx(() => controller.ambulanceBooked
+              ? GetBuilder<AmbulanceDetailsController>(
+            builder: (ambulanceController) {
+              return SlidingUpPanel(
+                maxHeight: ambulanceController.additionalData
+                    ? Dimensions.height40 * 17
+                    : Dimensions.height40 * 12,
+                controller: panelController,
+                borderRadius: BorderRadius.circular(Dimensions.radius30),
+                panelBuilder: (controller) =>
+                ambulanceController.additionalData
+                    ? AdditionalData(scrollController: controller)
+                    : AmbulanceDetails(scrollController: controller),
+                body: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    renderMap(),
+                  ],
+                ),
+              );
+            },
+          )
+              : SlidingUpPanel(
+            maxHeight: Dimensions.height40 * 6,
+            minHeight: Dimensions.height40 * 6,
+            isDraggable: false,
+            controller: panelController,
+            borderRadius: BorderRadius.circular(Dimensions.radius30),
+            panelBuilder: (controller) => PanelWidget(),
+            body: renderMap(),
+          )),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const LogIn() ),
+              MaterialPageRoute(builder: (context) => Homepage()),
             );
-
           },
+          child: Icon(Iconsax.alarm, size: 30),
+          backgroundColor: Colors.indigo,
         ),
-        body: SafeArea(
-
-          child: Obx(
-                () => controller.ambulanceBooked
-                ? GetBuilder<AmbulanceDetailsController>(
-              builder: (ambulanceController) {
-                return SlidingUpPanel(
-                  maxHeight: ambulanceController.additionalData
-                      ? Dimensions.height40 * 17
-                      : Dimensions.height40 * 12,
-                  controller: panelController,
-                  borderRadius:
-                  BorderRadius.circular(Dimensions.radius30),
-                  panelBuilder: (controller) =>
-                  ambulanceController.additionalData
-                      ? AdditionalData(
-                    scrollController: controller,
-                  )
-                      : AmbulanceDetails(
-                    scrollController: controller,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          color: Colors.grey.shade200,
+          elevation: 10,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(width: 40), // Add space on the left side
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AmbulanceGoApp()),
+                      );
+                    },
+                    icon: Icon(Iconsax.home, size: 35, color: Colors.indigo),
                   ),
-                  body: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      renderMap(),
-                    ],
+                  Text(
+                    'Home',
+                    style: TextStyle(fontSize: 12),
                   ),
-                );
-              },
-            )
-                : SlidingUpPanel(
-              maxHeight: Dimensions.height40 * 6,
-              minHeight: Dimensions.height40 * 6,
-              isDraggable: false,
-              controller: panelController,
-              borderRadius:
-              BorderRadius.circular(Dimensions.radius30),
-              panelBuilder: (controller) => PanelWidget(),
-              body: renderMap(),
-            ),
+                ],
+              ),
+              SizedBox(width: 40), // Add more space between items
+              Expanded(
+                child: SizedBox(), // Spacer to center the middle icon
+              ),
+              SizedBox(
+                width: 70, // Set width of the SizedBox
+                height: 70, // Set height of the SizedBox
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                ),
+              ),
+              SizedBox(width: 40), // Add more space between items
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
+                  ),
+                  Text(
+                    'My account',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              SizedBox(width: 40), // Add space on the right side
+            ],
           ),
         ),
       ),
     );
   }
 
-
-
   Widget renderMap() {
-    return Obx(
-          () => (controller.isLoading.value)
-          ? const Center(
-        child: CircularProgressIndicator(color: AppColors.pink),
-      )
-          : Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            child: GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
+    return Obx(() => (controller.isLoading.value)
+        ? Center(
+      child: CircularProgressIndicator(color: AppColors.pink),
+    )
+        : Stack(
+      alignment: Alignment.center,
+      children: [
+        SizedBox(
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                controller.currentLocation!.latitude!,
+                controller.currentLocation!.longitude!,
+              ),
+              zoom: 13.5,
+            ),
+            onCameraMove: (positioned) {
+              controller.latLng.add(positioned.target);
+            },
+            markers: {
+              if (controller.ambulanceBooked)
+                Marker(
+                  onTap: () {
+                    snackbar('Ambulance Location');
+                  },
+                  markerId: const MarkerId('driverLocation'),
+                  position: controller.destinationLocation,
+                ),
+              Marker(
+                onTap: () {
+                  snackbar('Your Location');
+                },
+                markerId: const MarkerId('patientLocation'),
+                position: LatLng(
                   controller.currentLocation!.latitude!,
                   controller.currentLocation!.longitude!,
                 ),
-                zoom: 13.5,
               ),
-              onCameraMove: (positioned) {
-                controller.latLng.add(positioned.target);
-              },
-              markers: {
-                if (controller.ambulanceBooked)
-                  Marker(
-                    onTap: () {
-                      snackbar('Ambulance Location');
-                    },
-                    markerId: const MarkerId('driverLocation'),
-                    position: controller.destinationLocation,
-                    // Use the preloaded BitmapDescriptor
-                  ),
-                Marker(
-                  onTap: () {
-                    snackbar('Your Location');
-                  },
-                  markerId: const MarkerId('patientLocation'),
-                  position: LatLng(
-                    controller.currentLocation!.latitude!,
-                    controller.currentLocation!.longitude!,
-                  ),
+            },
+            polylines: {
+              if (controller.ambulanceBooked)
+                Polyline(
+                  polylineId: const PolylineId('route'),
+                  points: controller.polylineCoordinates,
+                  color: AppColors.pink,
+                  width: 6,
                 ),
-              },
-              polylines: {
-                if (controller.ambulanceBooked)
-                  Polyline(
-                    polylineId: const PolylineId('route'),
-                    points: controller.polylineCoordinates,
-                    color: AppColors.pink,
-                    width: 6,
-                  ),
-              },
-            ),
+            },
           ),
-
-          Positioned(
-            top: 50,
-            right: 16,
-            child: GlassmorphicContainer(
-              width: 120,
-              height: 65,
-              borderRadius: 35,
-              blur: 15,
-              alignment: Alignment.center,
-              border: 0,
-              linearGradient: LinearGradient(
-                colors: [
-                  Colors.indigo,
-                  Colors.indigo,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderGradient: LinearGradient(
-                colors: [
-                  Colors.black54, // Use the same color as the linear gradient's end color
-                  Colors.black54, // Use the same color as the linear gradient's start color
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              child: Builder(
-                builder: (context) => ElevatedButton(
-
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>  QRGenerator() ),// Replace YourNextScreen with the appropriate widget
-                    );
-                    controller.toggleMapType();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(35.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    primary: Colors.black38, // Make the button background transparent
-                    elevation: 100, // No shadow
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-
-
-                        Icon(Icons.monetization_on,),
-                        SizedBox(width: 5.0, height: 65.0,),
-
-                        Text(
-
-                          "PAY RIDE",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-
-                            fontSize: 17,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-
-        ],
-      ),
-    );
+        ),
+      ],
+    ));
   }
-
-
 }

@@ -11,6 +11,9 @@ import 'package:last_minute/app/modules/login/binding/logIn_binding.dart';
 import 'package:last_minute/app/modules/login/view/login.dart';
 import 'package:last_minute/app/modules/qr/HomePage.dart';
 
+import '../app/modules/homepage/binding/landingpage_binding.dart';
+import '../app/modules/homepage/view/home.dart';
+
 class AppRoutes {
   static final pages = [
     GetPage(
@@ -18,11 +21,7 @@ class AppRoutes {
       page: () => const LogIn(),
       binding: LogInBinding(),
     ),
-    GetPage(
-      name: Homepage.route,
-      page: () => Homepage(),
-      binding: HomepageBinding(),
-    ),
+
     GetPage(
       name: CreateProfile.route,
       page: () => const CreateProfile(),
