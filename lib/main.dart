@@ -25,5 +25,5 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   prefs = await SharedPreferences.getInstance();
-  runApp( AmbulanceGoApp());
+  runApp(AmbulanceGoApp());
 }
