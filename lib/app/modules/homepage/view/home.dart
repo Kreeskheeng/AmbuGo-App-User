@@ -62,7 +62,9 @@ class AmbulanceGoApp extends StatelessWidget {
                     ),
                     child: Image.asset('assets/images/king.jpg'),
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Padding(
                     padding: EdgeInsets.only(left: 30.0),
                     child: Text(
@@ -72,7 +74,9 @@ class AmbulanceGoApp extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  Divider(color: Colors.white70,),
+                  Divider(
+                    color: Colors.white70,
+                  ),
                   ListTile(
                     onTap: () {},
                     leading: Icon(Iconsax.home),
@@ -88,7 +92,9 @@ class AmbulanceGoApp extends StatelessWidget {
                     leading: Icon(Iconsax.profile_2user),
                     title: Text('Contacts'),
                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(
+                    height: 50,
+                  ),
                   Divider(color: Colors.grey.shade800),
                   ListTile(
                     onTap: () {},
@@ -103,8 +109,10 @@ class AmbulanceGoApp extends StatelessWidget {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text('                      Ambulance Go Inc.',
-                      style: TextStyle(color: Colors.grey.shade500),),
+                    child: Text(
+                      '                      Ambulance Go Inc.',
+                      style: TextStyle(color: Colors.grey.shade500),
+                    ),
                   ),
                 ],
               ),
@@ -116,12 +124,9 @@ class AmbulanceGoApp extends StatelessWidget {
             backgroundColor: Colors.white,
             elevation: 0,
             leading: IconButton(
-
               color: Colors.indigo,
               onPressed: _handleMenuButtonPressed,
               icon: ValueListenableBuilder<AdvancedDrawerValue>(
-
-
                 valueListenable: _advancedDrawerController,
                 builder: (_, value, __) {
                   return AnimatedSwitcher(
@@ -134,7 +139,6 @@ class AmbulanceGoApp extends StatelessWidget {
                 },
               ),
             ),
-
             title: Row(
               children: [
                 Image.asset(
@@ -190,13 +194,13 @@ class AmbulanceGoApp extends StatelessWidget {
                       context,
                       'Request\nAmbulance',
                       'assets/images/ambuicon.png',
-                          () => Get.to(Homepage()), // Updated onTap function
+                      () => Get.to(Homepage()), // Updated onTap function
                     ),
                     _buildBigFeatureButton(
                       context,
                       'Mobile\nWallet',
                       'assets/images/walleticon.png',
-                          () => Get.to(Wallet()), // Updated onTap function
+                      () => Get.to(Wallet()), // Updated onTap function
                     ),
                   ],
                 ),
@@ -208,19 +212,22 @@ class AmbulanceGoApp extends StatelessWidget {
                       context,
                       'Insurance\nCoverage',
                       'assets/images/insuranceicon.png',
-                          () => Get.to(EmergencyContactsPage()), // Updated onTap function
+                      () => Get.to(
+                          EmergencyContactsPage()), // Updated onTap function
                     ),
                     _buildSmallFeatureButton(
                       context,
                       'Live\nTracking',
                       'assets/images/trackicon.png',
-                          () => Get.to(LiveTrackingPage()), // Updated onTap function
+                      () =>
+                          Get.to(LiveTrackingPage()), // Updated onTap function
                     ),
                     _buildSmallFeatureButton(
                       context,
                       'First Aid\nGuide',
                       'assets/images/firstaidicon.png',
-                          () => Get.to(FirstAidGuidePage()), // Updated onTap function
+                      () =>
+                          Get.to(FirstAidGuidePage()), // Updated onTap function
                     ),
                   ],
                 ),
@@ -240,7 +247,8 @@ class AmbulanceGoApp extends StatelessWidget {
               backgroundColor: Colors.indigo,
             ),
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
             shape: CircularNotchedRectangle(),
             color: Colors.grey.shade200,
@@ -255,7 +263,8 @@ class AmbulanceGoApp extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Iconsax.activity, size: 35, color: Colors.indigo),
+                      icon: Icon(Iconsax.activity,
+                          size: 35, color: Colors.indigo),
                     ),
                     Text(
                       'Activity',
@@ -280,7 +289,8 @@ class AmbulanceGoApp extends StatelessWidget {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
+                      icon: Icon(Iconsax.personalcard,
+                          size: 35, color: Colors.indigo),
                     ),
                     Text(
                       'My account',
@@ -336,7 +346,8 @@ class AmbulanceGoApp extends StatelessWidget {
     );
   }
 
-  Widget _buildBigFeatureButton(BuildContext context, String title, String imagePath, VoidCallback onTap) {
+  Widget _buildBigFeatureButton(BuildContext context, String title,
+      String imagePath, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -384,7 +395,8 @@ class AmbulanceGoApp extends StatelessWidget {
     );
   }
 
-  Widget _buildSmallFeatureButton(BuildContext context, String title, String imagePath, VoidCallback onTap) {
+  Widget _buildSmallFeatureButton(BuildContext context, String title,
+      String imagePath, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -480,10 +492,6 @@ class AmbulanceGoApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
 
 class EmergencyContactsPage extends StatelessWidget {
   @override
