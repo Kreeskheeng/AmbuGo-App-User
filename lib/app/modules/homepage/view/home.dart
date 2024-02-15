@@ -8,9 +8,11 @@ import 'package:last_minute/app/modules/wallet/main.dart';
 void main() {
   runApp(const AmbulanceGoApp());
 }
+
 void _handleMenuButtonPressed() {
   _advancedDrawerController.showDrawer();
 }
+
 final _advancedDrawerController = AdvancedDrawerController();
 
 class AmbulanceGoApp extends StatelessWidget {
@@ -34,14 +36,14 @@ class AmbulanceGoApp extends StatelessWidget {
               color: Colors.grey.shade900,
               blurRadius: 20.0,
               spreadRadius: 5.0,
-              offset: Offset(-20.0, 0.0),
+              offset: const Offset(-20.0, 0.0),
             ),
           ],
           borderRadius: BorderRadius.circular(30),
         ),
         drawer: SafeArea(
           child: Container(
-            padding: EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 20),
             child: ListTileTheme(
               textColor: Colors.white,
               iconColor: Colors.white,
@@ -51,7 +53,7 @@ class AmbulanceGoApp extends StatelessWidget {
                   Container(
                     width: 80.0,
                     height: 80.0,
-                    margin: EdgeInsets.only(
+                    margin: const EdgeInsets.only(
                       left: 20,
                       top: 24.0,
                     ),
@@ -62,10 +64,10 @@ class AmbulanceGoApp extends StatelessWidget {
                     ),
                     child: Image.asset('assets/images/king.jpg'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 30.0),
                     child: Text(
                       "Krees Kheeng",
@@ -73,40 +75,40 @@ class AmbulanceGoApp extends StatelessWidget {
                           color: Colors.white, fontWeight: FontWeight.w600),
                     ),
                   ),
-                  Spacer(),
-                  Divider(
+                  const Spacer(),
+                  const Divider(
                     color: Colors.white70,
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Iconsax.home),
-                    title: Text('Dashboard'),
+                    leading: const Icon(Iconsax.home),
+                    title: const Text('Dashboard'),
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Iconsax.chart_2),
-                    title: Text('Analytics'),
+                    leading: const Icon(Iconsax.chart_2),
+                    title: const Text('Analytics'),
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Iconsax.profile_2user),
-                    title: Text('Contacts'),
+                    leading: const Icon(Iconsax.profile_2user),
+                    title: const Text('Contacts'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Divider(color: Colors.grey.shade800),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Iconsax.setting_2),
-                    title: Text('Settings'),
+                    leading: const Icon(Iconsax.setting_2),
+                    title: const Text('Settings'),
                   ),
                   ListTile(
                     onTap: () {},
-                    leading: Icon(Iconsax.support),
-                    title: Text('Support'),
+                    leading: const Icon(Iconsax.support),
+                    title: const Text('Support'),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
@@ -130,7 +132,7 @@ class AmbulanceGoApp extends StatelessWidget {
                 valueListenable: _advancedDrawerController,
                 builder: (_, value, __) {
                   return AnimatedSwitcher(
-                    duration: Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 250),
                     child: Icon(
                       value.visible ? Iconsax.close_square : Iconsax.menu,
                       key: ValueKey<bool>(value.visible),
@@ -146,8 +148,8 @@ class AmbulanceGoApp extends StatelessWidget {
                   width: 40,
                   height: 40,
                 ),
-                SizedBox(width: 2.0),
-                Text(
+                const SizedBox(width: 2.0),
+                const Text(
                   'Ambulance Go',
                   style: TextStyle(
                     color: Colors.pink,
@@ -161,7 +163,7 @@ class AmbulanceGoApp extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Iconsax.notification,
                   color: Colors.indigo,
                   size: 30,
@@ -171,12 +173,12 @@ class AmbulanceGoApp extends StatelessWidget {
           ),
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Welcome to Ambulance Go!',
                   style: TextStyle(
                     color: Colors.black,
@@ -184,7 +186,7 @@ class AmbulanceGoApp extends StatelessWidget {
                     fontSize: 24,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 _buildUserDetails(context),
                 SizedBox(height: 30),
                 Row(
