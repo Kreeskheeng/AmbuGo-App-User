@@ -12,7 +12,7 @@ import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_c
 import 'package:last_minute/app/modules/homepage/view/homepage.dart'; // Update the import path with the correct path to your Homepage widget
 
 
-import 'app/app.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
