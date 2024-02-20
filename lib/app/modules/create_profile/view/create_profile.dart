@@ -11,7 +11,6 @@ import 'package:last_minute/widgets/big_text.dart';
 import '../../../../utils/dimensions.dart';
 import '../../../../widgets/button.dart';
 import '../../../../widgets/text_field.dart';
-import '../../login/view/login.dart';
 class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback onNotificationPressed;

@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:last_minute/app/app.dart';
 import 'package:last_minute/app/modules/before_login/view/before_login.dart';
 import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:last_minute/app/modules/homepage/view/home.dart';
@@ -14,7 +15,7 @@ import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_c
 import 'package:last_minute/app/modules/homepage/view/homepage.dart'; // Update the import path with the correct path to your Homepage widget
 
 
-import 'app/app.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,7 @@ void main() async {
   );
   prefs = await SharedPreferences.getInstance();
   runApp(MyApp());
+
 }
 //style: TextStyle(color: Colors.grey.shade500),),
 //AmbulanceGoApp()
