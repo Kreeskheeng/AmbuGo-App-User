@@ -5,16 +5,18 @@ import 'package:iconsax/iconsax.dart';
 import 'package:last_minute/app/modules/homepage/view/homepage.dart';
 import 'package:last_minute/app/modules/wallet/main.dart';
 
-void main() {
-  runApp(const AmbulanceGoApp());
-}
 void _handleMenuButtonPressed() {
-  _advancedDrawerController.showDrawer();
+  _advancedDrawerController1.showDrawer();
 }
-final _advancedDrawerController = AdvancedDrawerController();
+final _advancedDrawerController1 = AdvancedDrawerController();
+
+
 
 class AmbulanceGoApp extends StatelessWidget {
   const AmbulanceGoApp({super.key});
+  static const route = '/AmbulanceGoApp';
+
+  static launch() => Get.toNamed(route);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class AmbulanceGoApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: AdvancedDrawer(
         backdropColor: Colors.indigo.shade700,
-        controller: _advancedDrawerController,
+        controller: _advancedDrawerController1,
         animationCurve: Curves.easeInOut,
         animationDuration: const Duration(milliseconds: 300),
         animateChildDecoration: true,
@@ -122,7 +124,7 @@ class AmbulanceGoApp extends StatelessWidget {
               icon: ValueListenableBuilder<AdvancedDrawerValue>(
 
 
-                valueListenable: _advancedDrawerController,
+                valueListenable: _advancedDrawerController1,
                 builder: (_, value, __) {
                   return AnimatedSwitcher(
                     duration: Duration(milliseconds: 250),

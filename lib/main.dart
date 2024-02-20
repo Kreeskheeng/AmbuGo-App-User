@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:last_minute/app/modules/before_login/view/before_login.dart';
 import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:last_minute/app/modules/homepage/view/home.dart';
 import 'package:last_minute/app/modules/homepage/view/homepage.dart';
+import 'package:last_minute/app/modules/login/view/login.dart';
 import 'package:last_minute/firebase_options.dart';
 import 'package:last_minute/helper/shared_preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,5 +27,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   prefs = await SharedPreferences.getInstance();
-  runApp( AmbulanceGoApp());
+  runApp(MyApp());
 }
+//style: TextStyle(color: Colors.grey.shade500),),
+//AmbulanceGoApp()

@@ -21,7 +21,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 
 class Homepage extends GetView<HomepageController> {
-  final AdvancedDrawerController _advancedDrawerController = AdvancedDrawerController(); // Define AdvancedDrawerController
+ // Define AdvancedDrawerController
   AmbulanceDetailsController ambulanceController = Get.find();
   Completer<GoogleMapController> mapController = Completer();
   var currentMapType = Rx<MapType>(MapType.normal);
@@ -47,6 +47,7 @@ class Homepage extends GetView<HomepageController> {
   void _handleMenuButtonPressed() {
     _advancedDrawerController.showDrawer();
   }
+  final _advancedDrawerController = AdvancedDrawerController();
 
   @override
   Widget build(BuildContext context) {
@@ -232,10 +233,10 @@ class Homepage extends GetView<HomepageController> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Homepage()),
+              MaterialPageRoute(builder: (context) => AmbulanceGoApp()),
             );
           },
-          child: Icon(Iconsax.alarm, size: 30),
+          child: Icon(Iconsax.home, size: 30),
           backgroundColor: Colors.indigo,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -252,16 +253,11 @@ class Homepage extends GetView<HomepageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AmbulanceGoApp()),
-                      );
-                    },
-                    icon: Icon(Iconsax.home, size: 35, color: Colors.indigo),
+                    onPressed: () {},
+                    icon: Icon(Iconsax.activity, size: 35, color: Colors.indigo),
                   ),
                   Text(
-                    'Home',
+                    'Activity',
                     style: TextStyle(fontSize: 12),
                   ),
                 ],

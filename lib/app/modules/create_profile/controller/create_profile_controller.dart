@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:last_minute/app/modules/homepage/view/home.dart';
 import 'package:last_minute/app/modules/homepage/view/homepage.dart';
 import 'package:last_minute/helper/loading.dart';
 import 'package:last_minute/helper/shared_preference.dart';
@@ -10,7 +11,6 @@ class CreateProfileController extends GetxController {
   TextEditingController name = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController city = TextEditingController();
-  TextEditingController state = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
   final users = FirebaseFirestore.instance.collection('users');
   final prefs = SPController();
@@ -25,7 +25,7 @@ class CreateProfileController extends GetxController {
         "city":city.text,
       }).then((value) {
         LoadingUtils.hideLoader();
-        Homepage.launch();
+        AmbulanceGoApp.launch();
       });
     } catch (e) {
       LoadingUtils.hideLoader();

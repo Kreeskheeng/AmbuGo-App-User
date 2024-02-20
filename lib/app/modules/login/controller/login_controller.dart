@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:last_minute/app/modules/create_profile/view/create_profile.dart';
+import 'package:last_minute/app/modules/homepage/view/home.dart';
 import 'package:last_minute/app/modules/homepage/view/homepage.dart';
 import 'package:last_minute/helper/loading.dart';
 import 'package:last_minute/helper/shared_preference.dart';
@@ -62,7 +63,7 @@ class LogInController extends GetxController {
         users.doc(uid).get().then((user) {
           LoadingUtils.hideLoader();
           if (user.exists) {
-            Homepage.launch();
+            AmbulanceGoApp.launch();
           } else {
             CreateProfile.launch();
           }

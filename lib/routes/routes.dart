@@ -28,9 +28,15 @@ class AppRoutes {
       binding: CreateProfileBinding(),
     ),
     GetPage(
+      name: AmbulanceGoApp.route,
+      page: () => const AmbulanceGoApp(),
+    ),
+
+    GetPage(
       name: FirstPage.route,
       page: () => const FirstPage(),
     ),
+
     GetPage(
       name: QrPage.route,
       page: () => const QrPage(),

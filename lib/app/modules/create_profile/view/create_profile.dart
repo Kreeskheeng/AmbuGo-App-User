@@ -187,9 +187,6 @@ class CreateProfile extends GetView<CreateProfileController> {
                             if(controller.name.text.isEmpty){
                               snackbar('Kindly Enter your name');
                             }
-                            else if(controller.address.text.isEmpty){
-                              snackbar('Kindly enter your address');
-                            }
 
                             else if(controller.city.text.isEmpty){
                               snackbar('Kindly enter your city');
