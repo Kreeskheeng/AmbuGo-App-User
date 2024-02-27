@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:last_minute/app/modules/pay_stack/Payment/paystack_payment_page.dart';
+
+import 'Payment/paystack_payment_page.dart';
+
 
 class YourParentWidget extends StatelessWidget {
   @override

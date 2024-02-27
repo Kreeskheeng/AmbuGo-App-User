@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable
+import 'package:ambu_go_user/widgets/small_text.dart';
 import 'package:flutter/material.dart';
-import 'package:last_minute/widgets/small_text.dart';
 
 
 import '../utils/colors.dart';

@@ -7,12 +7,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:last_minute/app/modules/homepage/view/homepage.dart';
-import 'package:last_minute/app/modules/qr/QR%20Generator/GeneratedQR.dart';
-import 'package:last_minute/app/modules/qr/QR%20Generator/QRGenerator.dart';
-import 'package:last_minute/app/modules/wallet/pages/Qr.dart';
-import 'package:last_minute/helper/shared_preference.dart';
-import 'package:last_minute/app/modules/homepage/view/home.dart';
+
+import '../../../helper/shared_preference.dart';
+import '../homepage/view/homepage.dart';
+import '../qr/QR Generator/QRGenerator.dart';
+import 'pages/Qr.dart';
+
 
 class Wallet extends StatefulWidget {
   const Wallet({Key? key}) : super(key: key);
@@ -343,9 +343,7 @@ class _WalletState extends State<Wallet> {
                               _onServiceButtonPressed(_services[index][0]);
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: _services[index][2],
-                              // Base color
-                              onPrimary: _services[index][3],
+                              foregroundColor: _services[index][3], backgroundColor: _services[index][2],
                               // Light shadow color
                               elevation: 8,
                               // Adjust elevation value for the depth of the neumorphism effect

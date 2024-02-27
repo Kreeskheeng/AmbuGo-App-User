@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/create_profile/controller/create_profile_controller.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
-import 'package:last_minute/helper/snackbar.dart';
-import 'package:last_minute/utils/colors.dart';
-import 'package:last_minute/widgets/big_text.dart';
+import 'package:ambu_go_user/app/modules/create_profile/controller/create_profile_controller.dart';
+import 'package:ambu_go_user/app/modules/login/view/login.dart';
+import 'package:ambu_go_user/app/modules/login/view/login.dart';
+import 'package:ambu_go_user/app/modules/login/view/login.dart';
+import 'package:ambu_go_user/helper/snackbar.dart';
+import 'package:ambu_go_user/utils/colors.dart';
+import 'package:ambu_go_user/widgets/big_text.dart';
 
 import '../../../../utils/dimensions.dart';
 import '../../../../widgets/button.dart';

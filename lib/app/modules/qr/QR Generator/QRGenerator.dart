@@ -1,10 +1,10 @@
+import 'package:ambu_go_user/app/modules/login/view/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
-import 'package:last_minute/helper/shared_preference.dart';
-import 'package:last_minute/utils/colors.dart';
 
+import '../../../../helper/shared_preference.dart';
+import '../../../../utils/colors.dart';
 import 'GeneratedQR.dart';
 
 class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -139,7 +139,7 @@ class _QRGeneratorState extends State<QRGenerator> {
               height: 35,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.pink, // Set button color to pink
+                  backgroundColor: Colors.pink, // Set button color to pink
                 ),
                 child: Text(
                   "Generate QR",

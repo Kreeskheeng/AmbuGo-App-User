@@ -61,7 +61,7 @@ class _ScanQRState extends State<ScanQR> {
                 height: 35,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.pink, // Set button color to pink
+                    backgroundColor: Colors.pink, // Set button color to pink
                   ),
                   child: Text(
                     "Scan QR",

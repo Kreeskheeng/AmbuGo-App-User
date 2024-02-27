@@ -3,8 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
-import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:ambu_go_user/app/modules/ambulance_details/controller/ambulance_controller.dart';
+import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 
 import '../../../../helper/shared_preference.dart';
 import '../../../../utils/colors.dart';

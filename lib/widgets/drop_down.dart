@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:last_minute/utils/dimensions.dart';
 import '../utils/colors.dart';
+import '../utils/dimensions.dart';
 
 class DropDown extends StatelessWidget {
   DropDown(

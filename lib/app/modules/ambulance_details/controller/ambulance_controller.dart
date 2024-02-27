@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/ambulance_details/view/emergency_type_dialog.dart';
-import 'package:last_minute/helper/loading.dart';
-import 'package:last_minute/helper/shared_preference.dart';
-import 'package:last_minute/utils/colors.dart';
+import 'package:ambu_go_user/app/modules/ambulance_details/view/emergency_type_dialog.dart';
+import 'package:ambu_go_user/helper/loading.dart';
+import 'package:ambu_go_user/helper/shared_preference.dart';
+import 'package:ambu_go_user/utils/colors.dart';
 
 class AmbulanceDetailsController extends GetxController {
 

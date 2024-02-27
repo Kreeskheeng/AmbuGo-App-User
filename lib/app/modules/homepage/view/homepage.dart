@@ -1,22 +1,21 @@
 import 'dart:async';
+import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:last_minute/app/modules/homepage/view/home.dart';
-import 'package:last_minute/app/modules/homepage/view/panel_widget.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
-import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
-import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
-import 'package:last_minute/app/modules/ambulance_details/view/additional_details.dart';
-import 'package:last_minute/app/modules/ambulance_details/view/ambulance_details.dart';
-import 'package:last_minute/app/modules/pay_stack/main.dart';
-import 'package:last_minute/app/modules/wallet/main.dart';
-import 'package:last_minute/helper/snackbar.dart';
-import 'package:last_minute/utils/colors.dart';
-import 'package:last_minute/utils/dimensions.dart';
+
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import '../../../../helper/snackbar.dart';
+import '../../../../utils/colors.dart';
+import '../../../../utils/dimensions.dart';
+import '../../ambulance_details/controller/ambulance_controller.dart';
+import '../../ambulance_details/view/additional_details.dart';
+import '../../ambulance_details/view/ambulance_details.dart';
+import 'home.dart';
 
 
 
@@ -106,7 +105,7 @@ class Homepage extends GetView<HomepageController> {
                 Spacer(),
                 Divider(color: Colors.white70,),
                 ListTile(
-                  onTap: () {},
+                  onTap: () { Get.to(const AmbulanceGoApp());},
                   leading: Icon(Iconsax.home),
                   title: Text('Dashboard'),
                 ),
@@ -231,10 +230,6 @@ class Homepage extends GetView<HomepageController> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AmbulanceGoApp()),
-            );
           },
           child: Icon(Iconsax.home, size: 30),
           backgroundColor: Colors.indigo,

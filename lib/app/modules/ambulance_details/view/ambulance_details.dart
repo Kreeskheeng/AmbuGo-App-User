@@ -3,13 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
-import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
-import 'package:last_minute/app/modules/pay_stack/main.dart';
-import 'package:last_minute/helper/shared_preference.dart';
-import 'package:last_minute/utils/colors.dart';
-import 'package:last_minute/utils/dimensions.dart';
-import 'package:last_minute/widgets/big_text.dart';
+import 'package:ambu_go_user/app/modules/ambulance_details/controller/ambulance_controller.dart';
+import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:ambu_go_user/app/modules/pay_stack/main.dart';
+import 'package:ambu_go_user/helper/shared_preference.dart';
+import 'package:ambu_go_user/utils/colors.dart';
+import 'package:ambu_go_user/utils/dimensions.dart';
+import 'package:ambu_go_user/widgets/big_text.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../widgets/button.dart';
 

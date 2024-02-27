@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
+import 'package:ambu_go_user/app/modules/login/view/login.dart';
 
 import '../../../../utils/colors.dart';
 import '../../../../utils/dimensions.dart';

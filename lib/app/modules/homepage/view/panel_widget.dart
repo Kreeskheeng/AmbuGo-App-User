@@ -1,16 +1,17 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
-import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
-import 'package:last_minute/helper/shimmer.dart';
+
 import 'dart:ui';
 
+import '../../../../helper/shimmer.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/dimensions.dart';
 import '../../../../widgets/big_text.dart';
 import '../../../../widgets/button.dart';
+import '../../ambulance_details/controller/ambulance_controller.dart';
 
 class PanelWidget extends GetView<HomepageController> {
   AmbulanceDetailsController ambulanceController=Get.find();
@@ -35,8 +36,8 @@ class PanelWidget extends GetView<HomepageController> {
             ),
             Obx(
                   () => controller.selectedAddress?.value == 'Loading'
-                  ? Column(
-                children: const [
+                  ? const Column(
+                children: [
                   CustomShimmer.rectangular(height: 22),
                   SizedBox(
                     height: 8,

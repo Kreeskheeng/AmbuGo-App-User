@@ -1,12 +1,14 @@
+import 'package:ambu_go_user/widgets/big_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/login/controller/login_controller.dart';
-import 'package:last_minute/utils/colors.dart';
-import 'package:last_minute/utils/dimensions.dart';
-import 'package:last_minute/widgets/big_text.dart';
-import 'package:last_minute/widgets/button.dart';
-import 'package:last_minute/widgets/text_field.dart';
+
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../../../../utils/colors.dart';
+import '../../../../utils/dimensions.dart';
+import '../../../../widgets/button.dart';
+import '../../../../widgets/text_field.dart';
+import '../controller/login_controller.dart';
 
 
 class LogIn extends GetView<LogInController> {

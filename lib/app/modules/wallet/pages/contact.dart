@@ -1,7 +1,8 @@
 import 'package:align_positioned/align_positioned.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:last_minute/app/modules/wallet/pages/send_money.dart';
+
+import 'send_money.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({ Key? key }) : super(key: key);

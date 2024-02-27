@@ -1,18 +1,15 @@
+import 'package:ambu_go_user/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:last_minute/app/app.dart';
-import 'package:last_minute/app/modules/before_login/view/before_login.dart';
-import 'package:last_minute/app/modules/homepage/controller/homepage_controller.dart';
-import 'package:last_minute/app/modules/homepage/view/home.dart';
-import 'package:last_minute/app/modules/homepage/view/homepage.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
-import 'package:last_minute/firebase_options.dart';
-import 'package:last_minute/helper/shared_preference.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/ambulance_details/controller/ambulance_controller.dart';
-import 'package:last_minute/app/modules/homepage/view/homepage.dart'; // Update the import path with the correct path to your Homepage widget
+import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+import 'app/app.dart';
+import 'app/modules/ambulance_details/controller/ambulance_controller.dart';
+import 'app/modules/homepage/controller/homepage_controller.dart';
+import 'helper/shared_preference.dart'; // Update the import path with the correct path to your Homepage widget
 
 
 

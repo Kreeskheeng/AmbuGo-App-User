@@ -1,9 +1,10 @@
+import 'package:ambu_go_user/app/modules/wallet/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:last_minute/app/modules/homepage/view/homepage.dart';
-import 'package:last_minute/app/modules/wallet/main.dart';
+
+import 'homepage.dart';
 
 
 void main() {
@@ -89,7 +90,7 @@ class AmbulanceGoApp extends StatelessWidget {
                     color: Colors.white70,
                   ),
                   ListTile(
-                    onTap: () {},
+                    onTap: () { Get.to(Homepage());},
                     leading: const Icon(Iconsax.home),
                     title: const Text('Dashboard'),
                   ),
@@ -491,8 +492,7 @@ class AmbulanceGoApp extends StatelessWidget {
               // Implement action for advertisement button
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.indigo,
-              onPrimary: Colors.white,
+              foregroundColor: Colors.white, backgroundColor: Colors.indigo,
               padding: EdgeInsets.symmetric(vertical: 10),
             ),
             child: Text(

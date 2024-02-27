@@ -1,8 +1,8 @@
+import 'package:ambu_go_user/app/modules/login/controller/login_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:last_minute/app/modules/login/controller/login_controller.dart';
-import 'package:last_minute/app/modules/login/view/login.dart';
+
 
 
 import '../helper/shared_preference.dart';
@@ -11,6 +11,7 @@ import '../utils/theme.dart';
 import 'modules/ambulance_details/controller/ambulance_controller.dart';
 import 'modules/homepage/controller/homepage_controller.dart';
 import 'modules/homepage/view/homepage.dart';
+import 'modules/login/view/login.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
