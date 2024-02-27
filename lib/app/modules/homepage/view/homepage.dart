@@ -105,7 +105,7 @@ class Homepage extends GetView<HomepageController> {
                 Spacer(),
                 Divider(color: Colors.white70,),
                 ListTile(
-                  onTap: () { Get.to(const AmbulanceGoApp());},
+                  onTap: () { Get.to( Homepage());},
                   leading: Icon(Iconsax.home),
                   title: Text('Dashboard'),
                 ),

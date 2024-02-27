@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:ambu_go_user/app/modules/create_profile/view/create_profile.dart';
+import 'package:ambu_go_user/app/modules/homepage/view/homepage.dart';
 import 'package:ambu_go_user/helper/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +65,7 @@ class LogInController extends GetxController {
         users.doc(uid).get().then((user) {
           LoadingUtils.hideLoader();
           if (user.exists) {
-            AmbulanceGoApp.launch();
+            Homepage.launch();
           } else {
             CreateProfile.launch();
           }
