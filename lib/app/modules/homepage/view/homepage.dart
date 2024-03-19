@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ambu_go_user/app/modules/Settingz/Setttings.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import '../../../../utils/dimensions.dart';
 import '../../ambulance_details/controller/ambulance_controller.dart';
 import '../../ambulance_details/view/additional_details.dart';
 import '../../ambulance_details/view/ambulance_details.dart';
+import '../../mobile_money/client.dart';
 import 'home.dart';
 
 
@@ -122,7 +124,7 @@ class Homepage extends GetView<HomepageController> {
                 SizedBox(height: 50,),
                 Divider(color: Colors.grey.shade800),
                 ListTile(
-                  onTap: () {},
+                    onTap: () { Get.to( Settingz());},
                   leading: Icon(Iconsax.setting_2),
                   title: Text('Settings'),
                 ),
@@ -142,7 +144,10 @@ class Homepage extends GetView<HomepageController> {
           ),
         ),
       ),
-      child: Scaffold(appBar: AppBar(
+      child: Scaffold(
+
+
+        appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -230,14 +235,17 @@ class Homepage extends GetView<HomepageController> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            // Add your onPressed functionality here
           },
-          child: Icon(Iconsax.home, size: 30),
+          child: Icon(Iconsax.home, color: Colors.white, size: 27),
           backgroundColor: Colors.indigo,
+          shape: CircleBorder(), // This makes the FloatingActionButton round
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: BottomAppBar(
+        bottomNavigationBar: BottomAppBar(// Set width of the SizedBox
+
           shape: CircularNotchedRectangle(),
-          color: Colors.grey.shade200,
+          color: Colors.white,
           elevation: 10,
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -248,13 +256,14 @@ class Homepage extends GetView<HomepageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () { Get.to(UgandaMobileMoney());},
                     icon: Icon(Iconsax.activity, size: 35, color: Colors.indigo),
                   ),
-                  Text(
-                    'Activity',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                 // Text(
+                 //   'Activity',
+                 //   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                //  ),
+
                 ],
               ),
               SizedBox(width: 40), // Add more space between items
@@ -263,12 +272,12 @@ class Homepage extends GetView<HomepageController> {
               ),
               SizedBox(
                 width: 70, // Set width of the SizedBox
-                height: 70, // Set height of the SizedBox
+                height: 10, // Set height of the SizedBox
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                 ),
               ),
-              SizedBox(width: 40), // Add more space between items
+              SizedBox(width: 20), // Add more space between items
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -276,10 +285,11 @@ class Homepage extends GetView<HomepageController> {
                     onPressed: () {},
                     icon: Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
                   ),
-                  Text(
-                    'My account',
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  //Text(
+                 //   'My Account',
+                 //   style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                 // ),
+
                 ],
               ),
               SizedBox(width: 40), // Add space on the right side

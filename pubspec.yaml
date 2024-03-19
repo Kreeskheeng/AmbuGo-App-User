@@ -63,7 +63,7 @@ dependencies:
   #new
   url_launcher: ^6.0.12
   qr_flutter: ^4.1.0
-  barcode_scan2: ^4.2.4
+  barcode_scan2: ^4.3.0
   flutter_paystack: ^1.0.7
   glassmorphism: ^3.0.0
 
@@ -87,7 +87,9 @@ dependencies:
   intl: ^0.17.0
   http: ^0.13.4
   fluttertoast: ^8.0.9
-
+  easy_settings: ^1.0.0
+  dio: ^5.3.2
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:

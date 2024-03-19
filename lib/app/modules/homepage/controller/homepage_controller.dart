@@ -151,12 +151,14 @@ class HomepageController extends GetxController {
         'emergencyType': []
       },
       'medicalReport':{},
-      'nearest hospital':{}
+      'nearest hospital':{},
+      'declinedDrivers': [], // Include an empty list for declined drivers
     });
 
     LoadingUtils.hideLoader();
     _ambulanceBooked(x);
   }
+
 
   @override
   void onInit() {

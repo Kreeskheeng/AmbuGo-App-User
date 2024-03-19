@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../helper/shared_preference.dart';
 import '../routes/routes.dart';
 import '../utils/theme.dart';
+import '../utils/themepro.dart';
 import 'modules/ambulance_details/controller/ambulance_controller.dart';
 import 'modules/homepage/controller/homepage_controller.dart';
 import 'modules/homepage/view/homepage.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
-      theme: MyTheme.lightTheme(context),
+      theme: AppTheme.apptheme.copyWith(),
       getPages: AppRoutes.pages,
       home: FutureBuilder(
         future: FirebaseFirestore.instance.collection('bookings').get(),

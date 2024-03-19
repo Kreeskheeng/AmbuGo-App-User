@@ -201,6 +201,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "49af28382aefc53562459104f64d16b9dfd1e8ef68c862d5af436cc8356ce5a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.1"
+  easy_settings:
+    dependency: "direct main"
+    description:
+      name: easy_settings
+      sha256: cbe3ab1a95ace356c4bb5810c17d46efb3acc49669bb96697aac1298abbd0f9e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   email_validator:
     dependency: "direct main"
     description:
@@ -744,6 +760,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   lottie:
     dependency: "direct main"
     description:
@@ -896,6 +920,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.7.4"
+  property_change_notifier:
+    dependency: transitive
+    description:
+      name: property_change_notifier
+      sha256: "804357d7371eaf84d4df5e2659671eb2a47908a0b911839a95eb11746de86985"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   protobuf:
     dependency: transitive
     description:
