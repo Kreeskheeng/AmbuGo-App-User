@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:ambu_go_user/app/modules/Settingz/Setttings.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -49,6 +51,13 @@ class Homepage extends GetView<HomepageController> {
     _advancedDrawerController.showDrawer();
   }
   final _advancedDrawerController = AdvancedDrawerController();
+
+  Future<BitmapDescriptor> _loadMarkerIcon(String assetPath) async {
+    final ByteData byteData = await rootBundle.load(assetPath);
+    final Uint8List byteList = byteData.buffer.asUint8List();
+    return BitmapDescriptor.fromBytes(byteList);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -305,54 +314,76 @@ class Homepage extends GetView<HomepageController> {
         ? Center(
       child: CircularProgressIndicator(color: AppColors.pink),
     )
-        : Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          child: GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: LatLng(
-                controller.currentLocation!.latitude!,
-                controller.currentLocation!.longitude!,
-              ),
-              zoom: 13.5,
-            ),
-            onCameraMove: (positioned) {
-              controller.latLng.add(positioned.target);
-            },
-            markers: {
-              if (controller.ambulanceBooked)
-                Marker(
-                  onTap: () {
-                    snackbar('Ambulance Location');
+        : FutureBuilder(
+      future: _loadMarkerIcons(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator(color: AppColors.pink));
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error loading marker icons'));
+        } else {
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                child: GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(
+                      controller.currentLocation!.latitude!,
+                      controller.currentLocation!.longitude!,
+                    ),
+                    zoom: 14.5,
+                  ),
+                  onCameraMove: (positioned) {
+                    controller.latLng.add(positioned.target);
                   },
-                  markerId: const MarkerId('driverLocation'),
-                  position: controller.destinationLocation,
-                ),
-              Marker(
-                onTap: () {
-                  snackbar('Your Location');
-                },
-                markerId: const MarkerId('patientLocation'),
-                position: LatLng(
-                  controller.currentLocation!.latitude!,
-                  controller.currentLocation!.longitude!,
+                  markers: {
+                    if (controller.ambulanceBooked)
+                      Marker(
+                        onTap: () {
+                          snackbar('Ambulance Location');
+                        },
+                        markerId: const MarkerId('driverLocation'),
+                        position: controller.destinationLocation,
+                        icon: _driverMarkerIcon,
+                      ),
+                    Marker(
+                      onTap: () {
+                        snackbar('Your Location');
+                      },
+                      markerId: const MarkerId('patientLocation'),
+                      position: LatLng(
+                        controller.currentLocation!.latitude!,
+                        controller.currentLocation!.longitude!,
+                      ),
+                      icon: _patientMarkerIcon,
+                    ),
+                  },
+                  polylines: {
+                    if (controller.ambulanceBooked)
+                      Polyline(
+                        polylineId: const PolylineId('route'),
+                        points: controller.polylineCoordinates,
+                        color: AppColors.pink,
+                        width: 6,
+                      ),
+                  },
                 ),
               ),
-            },
-            polylines: {
-              if (controller.ambulanceBooked)
-                Polyline(
-                  polylineId: const PolylineId('route'),
-                  points: controller.polylineCoordinates,
-                  color: AppColors.pink,
-                  width: 6,
-                ),
-            },
-          ),
-        ),
-      ],
+            ],
+          );
+        }
+      },
     ));
   }
+
+  BitmapDescriptor _driverMarkerIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor _patientMarkerIcon = BitmapDescriptor.defaultMarker;
+
+  Future<void> _loadMarkerIcons() async {
+    _driverMarkerIcon = await _loadMarkerIcon('assets/images/pin.png');
+    _patientMarkerIcon = await _loadMarkerIcon('assets/images/patIcon.png');
+  }
+
 }

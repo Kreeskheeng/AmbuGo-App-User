@@ -37,10 +37,10 @@ class AppTheme {
     colorScheme: const ColorScheme(
             background: Colors.white,
             onPrimary: Colors.white,
-            onBackground: Colors.white,
+            onBackground: Colors.black,
             onError: Colors.white,
             onSecondary: Colors.white,
-            onSurface: Colors.white,
+            onSurface: Colors.black,
             error: Colors.red,
             primary: Colors.blue,
             secondary: AppColors.secondary,

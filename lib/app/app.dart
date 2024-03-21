@@ -11,6 +11,7 @@ import '../utils/theme.dart';
 import '../utils/themepro.dart';
 import 'modules/ambulance_details/controller/ambulance_controller.dart';
 import 'modules/homepage/controller/homepage_controller.dart';
+import 'modules/homepage/view/home.dart';
 import 'modules/homepage/view/homepage.dart';
 import 'modules/login/view/login.dart';
 
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         if((SPController().getIsLoggedin()) && booked==true){
           Get.lazyPut(()=>HomepageController());
           Get.lazyPut(()=>AmbulanceDetailsController());
-          return 
+          return
             Homepage(booked: true,);
         }
         else if((SPController().getIsLoggedin())){
