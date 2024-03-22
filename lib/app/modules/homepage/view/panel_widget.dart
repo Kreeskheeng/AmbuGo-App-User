@@ -20,7 +20,7 @@ class PanelWidget extends GetView<HomepageController> {
   });
 
 
-// ...
+
 
   @override
   Widget build(BuildContext context) {

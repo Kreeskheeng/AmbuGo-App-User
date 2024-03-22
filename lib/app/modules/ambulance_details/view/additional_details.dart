@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ambu_go_user/app/modules/ambulance_details/controller/ambulance_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../helper/shared_preference.dart';
 import '../../../../utils/colors.dart';
@@ -250,14 +251,17 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                             : Column(
                                 children: [
                                   SizedBox(
-                                      height: Dimensions.height40 * 5,
-                                      child: Image.network(
-                                          'https://media.istockphoto.com/id/1487081775/photo/emergency-services-team-checking-ambulance-interior.webp?b=1&s=170667a&w=0&k=20&c=7u7GXdZ2mnz1l5yY8X4vUBMH_UjcNGDAk1gnwu97TvY=')),
+                                      height: Dimensions.height40 * 7,
+                                      child: Lottie.network(
+                                        'https://lottie.host/c20c6e37-8b0e-4258-9531-62e53a7acd1d/0FFgUfmWxN.json', // URL to your Lottie animation
+                                        fit: BoxFit.contain, // Adjust the fit as needed
+                                      )),
                                   BigText(
-                                    text:
-                                        "Don't Panic! We are trying best to search the Ambulance.",
+                                    text: "Provide Any Other Information.",
                                     color: AppColors.black,
-                                    maxLines: null,
+                                    fontWeight: FontWeight.bold,
+                                    maxLines:4,
+                                    size: 20,
                                   )
                                 ],
                               );

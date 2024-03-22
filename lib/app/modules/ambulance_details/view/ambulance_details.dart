@@ -10,8 +10,10 @@ import 'package:ambu_go_user/helper/shared_preference.dart';
 import 'package:ambu_go_user/utils/colors.dart';
 import 'package:ambu_go_user/utils/dimensions.dart';
 import 'package:ambu_go_user/widgets/big_text.dart';
+import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../widgets/button.dart';
+
 
 
 
@@ -306,19 +308,23 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                               ],
                             )
                           : Column(
-                              children: [
-                                SizedBox(
-                                    height: Dimensions.height40 * 5,
-                                    child: Image.network(
-                                        'https://media.istockphoto.com/id/1477883333/photo/blue-flash-light-of-police-car-against-red-fire-truck.webp?b=1&s=170667a&w=0&k=20&c=_dn6m3qBhO96uiW3OShKEqK6hb-WhM8BPgr8ZtFuxGI=')),
-                                BigText(
-                                  text:
-                                      "Don't Panic! We are trying best to search the Ambulance.",
-                                  color: AppColors.black,
-                                  maxLines: null,
-                                )
-                              ],
-                            );
+                        children: [
+                          SizedBox(
+                            height: Dimensions.height40 * 5,
+                            child: Lottie.network(
+                              'https://lottie.host/7b9bf500-b3ba-4b28-8457-0f19ac94770d/BbwhUC7E4q.json', // URL to your Lottie animation
+                              fit: BoxFit.contain, // Adjust the fit as needed
+                            ),
+                          ),
+                          BigText(
+                            text: "Searching For Nearest Ambulance.",
+                            color: AppColors.black,
+                            fontWeight: FontWeight.bold,
+                            maxLines:4,
+                            size: 20,
+                          )
+                        ],
+                      );
                     })),
           ),
           controller.informationUpdated
