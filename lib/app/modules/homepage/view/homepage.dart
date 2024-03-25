@@ -18,7 +18,7 @@ import '../../../../utils/dimensions.dart';
 import '../../ambulance_details/controller/ambulance_controller.dart';
 import '../../ambulance_details/view/additional_details.dart';
 import '../../ambulance_details/view/ambulance_details.dart';
-import '../../mobile_money/client.dart';
+// import '../../mobile_money/client.dart';
 import 'home.dart';
 
 
@@ -265,7 +265,9 @@ class Homepage extends GetView<HomepageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () { Get.to(UgandaMobileMoney());},
+                    onPressed: () { 
+                      // was taking me to wallet
+                    },
                     icon: Icon(Iconsax.activity, size: 35, color: Colors.indigo),
                   ),
                  // Text(
