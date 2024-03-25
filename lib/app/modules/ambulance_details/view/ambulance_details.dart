@@ -14,9 +14,6 @@ import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../widgets/button.dart';
 
-
-
-
 class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
   HomepageController homepageController = Get.find();
   ScrollController scrollController;
@@ -35,27 +32,24 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
   void retrieveRideInfo() async {
     try {
       DocumentSnapshot<Map<String, dynamic>> rideInfoDoc =
-      await FirebaseFirestore.instance
-          .collection('bookings')
-          .doc(SPController().getUserId())
-          .get();
+          await FirebaseFirestore.instance
+              .collection('bookings')
+              .doc(SPController().getUserId())
+              .get();
 
       String rideKey = rideInfoDoc.id; // Document ID is the rideKey
-      String time = rideInfoDoc['time'].toString(); // Change the field name as per your Firestore structure
+      String time = rideInfoDoc['time']
+          .toString(); // Change the field name as per your Firestore structure
 
       print('Retrieved ride key: $rideKey');
       print('Retrieved time: $time');
 
       // Call the appropriate function to handle rideKey and time
       //_handleRideInfo(rideKey, time);
-
     } catch (e) {
       print('Error retrieving ride info: $e');
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,38 +66,39 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                         .collection('bookings')
                         .snapshots(),
                     builder: (context, snapshot) {
-                      bool completed=false;
-                      List bookingAmbulance=[];
+                      bool completed = false;
+                      List bookingAmbulance = [];
                       if (snapshot.hasData) {
                         final bookings = snapshot.data!.docs;
                         for (var booking in bookings) {
                           if (booking['ambulanceStatus'] == 'assigned' &&
                               booking['userId'] == SPController().getUserId()) {
-                                print( booking['emtId']);
+                            print(booking['emtId']);
                             homepageController.onGetDocuments(
                                 booking['ambulanceDetails']['driverId'],
                                 booking['emtId']);
-                                bookingAmbulance.add(booking);
-                                homepageController.onGetPatientLocation(booking['ambulanceLocation']['lat'], booking['ambulanceLocation']['lng']);
-                                
+                            bookingAmbulance.add(booking);
+                            homepageController.onGetPatientLocation(
+                                booking['ambulanceLocation']['lat'],
+                                booking['ambulanceLocation']['lng']);
                           }
-                          if(booking['ambulanceStatus'] == 'completed' &&
-                              booking['userId'] == SPController().getUserId()){
-                                completed=true;
-                              }
+                          if (booking['ambulanceStatus'] == 'completed' &&
+                              booking['userId'] == SPController().getUserId()) {
+                            completed = true;
+                          }
                         }
-                        
                       }
-                      if(completed==true){
-                        //bookingAmbulance.clear();  
-                          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                            homepageController.ambulanceAssignedBool(false);
+                      if (completed == true) {
+                        //bookingAmbulance.clear();
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((timeStamp) {
+                          homepageController.ambulanceAssignedBool(false);
                           homepageController.ambulanceBookedBool(false);
-                          });
-                          
-                        }
+                        });
+                      }
 
-                      return homepageController.driverDoc!=null && bookingAmbulance.isNotEmpty
+                      return homepageController.driverDoc != null &&
+                              bookingAmbulance.isNotEmpty
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -122,18 +117,19 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                   size: Dimensions.font20 * 1.3,
                                   fontWeight: FontWeight.w600,
                                 ),
-                                 SizedBox(
-                                    height: Dimensions.height20 * 1.5,
-                                  ),
-                                  Button(
-                        on_pressed: () {},
-                        text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['t']}',
-                        color: AppColors.black,
-                        textColor: AppColors.white,
-                        width: Dimensions.width40 * 6,
-                        height: Dimensions.height40 * 1.1,
-                        textSize: Dimensions.font20 * 0.8,
-                      ),
+                                SizedBox(
+                                  height: Dimensions.height20 * 1.5,
+                                ),
+                                Button(
+                                  on_pressed: () {},
+                                  text:
+                                      'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['t']}',
+                                  color: AppColors.black,
+                                  textColor: AppColors.white,
+                                  width: Dimensions.width40 * 6,
+                                  height: Dimensions.height40 * 1.1,
+                                  textSize: Dimensions.font20 * 0.8,
+                                ),
                                 SizedBox(
                                   height: Dimensions.height20 * 1.5,
                                 ),
@@ -155,14 +151,16 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                   height: Dimensions.height15,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     BigText(
                                       text: 'Date Of Ride  ',
                                       size: Dimensions.font15 * 1.2,
                                     ),
                                     BigText(
-                                      text: controller.dateOfRide.value, // Update this line
+                                      text: controller
+                                          .dateOfRide.value, // Update this line
                                       size: Dimensions.font15 * 1.2,
                                     )
                                   ],
@@ -171,19 +169,20 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                   height: Dimensions.height15,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     BigText(
                                       text: 'Ride key  ',
                                       size: Dimensions.font15 * 1.2,
                                     ),
                                     BigText(
-                                      text: controller.rideId.value, // Update this line
+                                      text: controller
+                                          .rideId.value, // Update this line
                                       size: Dimensions.font15 * 1.2,
                                     )
                                   ],
                                 ),
-
                                 const Divider(
                                   thickness: 1,
                                   color: AppColors.lightGrey,
@@ -253,7 +252,6 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                           width: Dimensions.width10,
                                         ),
                                         GetBuilder<HomepageController>(
-                                          
                                           builder: (_) {
                                             return Column(
                                               crossAxisAlignment:
@@ -265,8 +263,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                                             null
                                                         ? 'Not Assigned Yet'
                                                         : homepageController
-                                                                .emtDoc[
-                                                            'name'],
+                                                            .emtDoc['name'],
                                                     size: Dimensions.font15),
                                                 BigText(
                                                   text: 'Nurse',
@@ -290,14 +287,14 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        _launchPhoneCall(homepageController.driverDoc['mobileNumber']);
+                                        _launchPhoneCall(homepageController
+                                            .driverDoc['mobileNumber']);
                                       },
                                       icon: const Icon(
                                         Icons.phone,
                                         color: AppColors.pink,
                                       ),
                                     )
-
                                   ],
                                 ),
                                 const Divider(
@@ -308,23 +305,24 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                               ],
                             )
                           : Column(
-                        children: [
-                          SizedBox(
-                            height: Dimensions.height40 * 5,
-                            child: Lottie.network(
-                              'https://lottie.host/7b9bf500-b3ba-4b28-8457-0f19ac94770d/BbwhUC7E4q.json', // URL to your Lottie animation
-                              fit: BoxFit.contain, // Adjust the fit as needed
-                            ),
-                          ),
-                          BigText(
-                            text: "Searching For Nearest Ambulance.",
-                            color: AppColors.black,
-                            fontWeight: FontWeight.bold,
-                            maxLines:4,
-                            size: 20,
-                          )
-                        ],
-                      );
+                              children: [
+                                SizedBox(
+                                  height: Dimensions.height40 * 5,
+                                  child: Image.asset(
+                                    'assets/gifs/gif_map_asset.gif', // Replace this with the path to your GIF file
+                                    fit: BoxFit.contain,
+                                    // You can also adjust width and height according to your needs
+                                  ),
+                                ),
+                                BigText(
+                                  text: "Searching For Nearest Ambulance.",
+                                  color: AppColors.black,
+                                  fontWeight: FontWeight.bold,
+                                  maxLines: 4,
+                                  size: 20,
+                                )
+                              ],
+                            );
                     })),
           ),
           controller.informationUpdated
@@ -356,12 +354,16 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                       width: double.maxFinite,
                       height: Dimensions.height40 * 1.5,
                       radius: Dimensions.radius20 * 2,
-                on_pressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  PayStack(initialEmail: 'ckamoga23@gmail.com', initialPrice: 500,) ),
-                  );
-                },
+                      on_pressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PayStack(
+                                    initialEmail: 'ckamoga23@gmail.com',
+                                    initialPrice: 500,
+                                  )),
+                        );
+                      },
                       text: 'FIRST AID',
                       color: AppColors.pink,
                     )
