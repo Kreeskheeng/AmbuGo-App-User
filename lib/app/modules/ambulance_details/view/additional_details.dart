@@ -16,12 +16,10 @@ import '../../../../widgets/drop_down.dart';
 import '../../../../widgets/text_field.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class AdditionalData extends GetView<AmbulanceDetailsController> {
-  HomepageController homepageController=Get.find();
+  HomepageController homepageController = Get.find();
   ScrollController scrollController;
   AdditionalData({super.key, required this.scrollController});
-
 
   void _launchPhoneCall(String phoneNumber) async {
     final url = 'tel:$phoneNumber';
@@ -32,7 +30,6 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
       print('Error launching phone call');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,51 +49,52 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                           .collection('bookings')
                           .snapshots(),
                       builder: ((context, snapshot) {
-                        List bookingAmbulance=[];
+                        List bookingAmbulance = [];
                         bool completed = false;
-                        if (snapshot.hasData) {
-                        final bookings = snapshot.data!.docs;
-                        for (var booking in bookings) {
-                          if (booking['ambulanceStatus'] == 'assigned' &&
-                              booking['userId'] == SPController().getUserId()) {
-                            homepageController.onGetDocuments(
-                                booking['ambulanceDetails']['driverId'],
-                                booking['emtId']);
-                                bookingAmbulance.add(booking);
-                                homepageController.onGetPatientLocation(booking['ambulanceLocation']['lat'], booking['ambulanceLocation']['lng']);
-                                
-                          }
-                          if(booking['ambulanceStatus'] == 'completed' &&
-                              booking['userId'] == SPController().getUserId()){
-                                completed=true;
-                              }
-                        }
-                        
-                      }
                         if (snapshot.hasData) {
                           final bookings = snapshot.data!.docs;
                           for (var booking in bookings) {
                             if (booking['ambulanceStatus'] == 'assigned' &&
                                 booking['userId'] ==
                                     SPController().getUserId()) {
-                                      bookingAmbulance.add(booking);
-                              //assigned = true;
+                              homepageController.onGetDocuments(
+                                  booking['ambulanceDetails']['driverId'],
+                                  booking['emtId']);
+                              bookingAmbulance.add(booking);
+                              homepageController.onGetPatientLocation(
+                                  booking['ambulanceLocation']['lat'],
+                                  booking['ambulanceLocation']['lng']);
                             }
-                            if(booking['ambulanceStatus'] == 'completed' &&
+                            if (booking['ambulanceStatus'] == 'completed' &&
                                 booking['userId'] ==
-                                    SPController().getUserId()){
-                                      completed=true;
-                                    }
-
+                                    SPController().getUserId()) {
+                              completed = true;
+                            }
                           }
                         }
-                        if(completed==true){
+                        if (snapshot.hasData) {
+                          final bookings = snapshot.data!.docs;
+                          for (var booking in bookings) {
+                            if (booking['ambulanceStatus'] == 'assigned' &&
+                                booking['userId'] ==
+                                    SPController().getUserId()) {
+                              bookingAmbulance.add(booking);
+                              //assigned = true;
+                            }
+                            if (booking['ambulanceStatus'] == 'completed' &&
+                                booking['userId'] ==
+                                    SPController().getUserId()) {
+                              completed = true;
+                            }
+                          }
+                        }
+                        if (completed == true) {
                           homepageController.ambulanceAssignedBool(false);
-                           controller.onInformationUpdated(false);
+                          controller.onInformationUpdated(false);
                           homepageController.ambulanceBookedBool(false);
                         }
-                        return 
-                        homepageController.driverDoc!=null && bookingAmbulance.isNotEmpty
+                        return homepageController.driverDoc != null &&
+                                bookingAmbulance.isNotEmpty
                             ? Column(
                                 children: [
                                   Container(
@@ -123,18 +121,19 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                       color: AppColors.white,
                                     )),
                                   ),
-                                   SizedBox(
-                                     height: Dimensions.height20 * 1.5,
-                                   ),
-                                   Button(
-                         on_pressed: () {},
-                         text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['time']}',
-                         color: AppColors.black,
-                         textColor: AppColors.white,
-                         width: Dimensions.width40 * 6,
-                         height: Dimensions.height40 * 1.1,
-                         textSize: Dimensions.font20 * 0.8,
-                       ),
+                                  SizedBox(
+                                    height: Dimensions.height20 * 1.5,
+                                  ),
+                                  Button(
+                                    on_pressed: () {},
+                                    text:
+                                        'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['time']}',
+                                    color: AppColors.black,
+                                    textColor: AppColors.white,
+                                    width: Dimensions.width40 * 6,
+                                    height: Dimensions.height40 * 1.1,
+                                    textSize: Dimensions.font20 * 0.8,
+                                  ),
                                   const Divider(
                                     thickness: 1,
                                     color: AppColors.lightGrey,
@@ -160,7 +159,7 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                             children: [
                                               BigText(
                                                   text: homepageController
-                                                    .driverDoc['name'],
+                                                      .driverDoc['name'],
                                                   size: Dimensions.font15),
                                               BigText(
                                                 text: 'Ambulance Driver',
@@ -178,14 +177,14 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                       ),
                                       IconButton(
                                         onPressed: () {
-                                          _launchPhoneCall(homepageController.driverDoc['mobileNumber']);
+                                          _launchPhoneCall(homepageController
+                                              .driverDoc['mobileNumber']);
                                         },
                                         icon: const Icon(
                                           Icons.phone,
                                           color: AppColors.pink,
                                         ),
                                       )
-
                                     ],
                                   ),
                                   const Divider(
@@ -213,27 +212,26 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                             children: [
                                               BigText(
                                                   text: homepageController
-                                                                .emtDoc ==
-                                                            null
-                                                        ? 'Not Assigned Yet'
-                                                        : homepageController
-                                                            .emtDoc['name'],
+                                                              .emtDoc ==
+                                                          null
+                                                      ? 'Not Assigned Yet'
+                                                      : homepageController
+                                                          .emtDoc['name'],
                                                   size: Dimensions.font15),
                                               BigText(
                                                 text: 'Nurse',
                                                 size: Dimensions.font15,
                                                 color: AppColors.pink,
                                               ),
-                                               BigText(
-                                                    text: homepageController
-                                                                .emtDoc ==
-                                                            null
-                                                        ? 'Not Assigned Yet'
-                                                        : homepageController
-                                                                .emtDoc[
-                                                            'mobileNumber'],
-                                                    size: Dimensions.font15),
-
+                                              BigText(
+                                                  text: homepageController
+                                                              .emtDoc ==
+                                                          null
+                                                      ? 'Not Assigned Yet'
+                                                      : homepageController
+                                                              .emtDoc[
+                                                          'mobileNumber'],
+                                                  size: Dimensions.font15),
                                             ],
                                           )
                                         ],
@@ -251,23 +249,23 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                             : Column(
                                 children: [
                                   SizedBox(
-                                      height: Dimensions.height40 * 7,
-                                      child: Lottie.network(
-                                        'https://lottie.host/c20c6e37-8b0e-4258-9531-62e53a7acd1d/0FFgUfmWxN.json', // URL to your Lottie animation
-                                        fit: BoxFit.contain, // Adjust the fit as needed
-                                      )),
+                                    height: Dimensions.height40 * 7,
+                                    child: Image.asset(
+                                      'assets/gifs/more_info.gif', // Replace this with the path to your GIF file
+                                      fit: BoxFit.contain,
+                                      // You can also adjust width and height according to your needs
+                                    ),
+                                  ),
                                   BigText(
                                     text: "Provide Any Other Information.",
                                     color: AppColors.black,
                                     fontWeight: FontWeight.bold,
-                                    maxLines:4,
+                                    maxLines: 4,
                                     size: 20,
                                   )
                                 ],
                               );
                       })),
-
-
                   Text_Field(
                       radius: Dimensions.radius20,
                       text_field_width: double.maxFinite,
@@ -286,7 +284,6 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                   SizedBox(
                     height: Dimensions.height20,
                   ),
-
                   Text_Field(
                       radius: Dimensions.radius20,
                       text_field_width: double.maxFinite,
@@ -302,7 +299,6 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                           hintText: 'Do You need Oxygen,Y/N!',
                         ),
                       )),
-
                   SizedBox(
                     height: Dimensions.height20,
                   ),
@@ -322,7 +318,6 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                       controller.onChangedHospitalType(newValue.toString());
                     },
                   ),
-
                   SizedBox(
                     height: Dimensions.height10,
                   ),

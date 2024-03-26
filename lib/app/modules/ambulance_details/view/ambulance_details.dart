@@ -309,7 +309,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                                 SizedBox(
                                   height: Dimensions.height40 * 5,
                                   child: Image.asset(
-                                    'assets/gifs/gif_map_asset.gif', // Replace this with the path to your GIF file
+                                    'assets/gifs/ambulance_go.webp', // Replace this with the path to your GIF file
                                     fit: BoxFit.contain,
                                     // You can also adjust width and height according to your needs
                                   ),
