@@ -308,12 +308,11 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                               children: [
                                 SizedBox(
                                   height: Dimensions.height40 * 5,
-                                  child: Image.asset(
-                                    'assets/gifs/ambulance_go.webp', // Replace this with the path to your GIF file
-                                    fit: BoxFit.contain,
-                                    // You can also adjust width and height according to your needs
+                                  child: Lottie.network(
+                                    'https://lottie.host/7b9bf500-b3ba-4b28-8457-0f19ac94770d/BbwhUC7E4q.json', // URL to your Lottie animation
+                                    fit: BoxFit.contain, // Adjust the fit as needed
                                   ),
-                                ),
+                      ),
                                 BigText(
                                   text: "Searching For Nearest Ambulance.",
                                   color: AppColors.black,
@@ -355,16 +354,8 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                       height: Dimensions.height40 * 1.5,
                       radius: Dimensions.radius20 * 2,
                       on_pressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PayStack(
-                                    initialEmail: 'ckamoga23@gmail.com',
-                                    initialPrice: 500,
-                                  )),
-                        );
                       },
-                      text: 'FIRST AID',
+                      text: 'Scan QRcode',
                       color: AppColors.pink,
                     )
                   : Button(
@@ -384,3 +375,11 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
     );
   }
 }
+//Navigator.push(
+//context,
+//MaterialPageRoute(
+//builder: (context) => PayStack(
+//initialEmail: 'ckamoga23@gmail.com',
+//initialPrice: 500,
+//)),
+//);

@@ -3,9 +3,13 @@ import 'dart:typed_data';
 import 'package:ambu_go_user/app/modules/Settingz/Setttings.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
+import 'package:ambu_go_user/app/modules/pay_stack/Payment/paystack_payment_page.dart';
+import 'package:ambu_go_user/app/modules/pay_stack/main.dart';
+import 'package:ambu_go_user/app/modules/qr/QR%20Generator/QRGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconsax/iconsax.dart';
@@ -24,10 +28,13 @@ import 'home.dart';
 
 
 class Homepage extends GetView<HomepageController> {
- // Define AdvancedDrawerController
+  final HomepageController controller = Get.put(HomepageController());
   AmbulanceDetailsController ambulanceController = Get.find();
   Completer<GoogleMapController> mapController = Completer();
   var currentMapType = Rx<MapType>(MapType.normal);
+
+  String getResult = 'QR Code Result';
+
 
   void toggleMapType() {
     currentMapType.value = (currentMapType.value == MapType.normal)
@@ -265,7 +272,14 @@ class Homepage extends GetView<HomepageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () { 
+                    onPressed: () { Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PayStack(
+                            initialEmail: 'ckamoga23@gmail.com',
+                            initialPrice: 5000,
+                          )),
+                    );
                       // was taking me to wallet
                     },
                     icon: Icon(Iconsax.activity, size: 35, color: Colors.indigo),
@@ -293,7 +307,8 @@ class Homepage extends GetView<HomepageController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      scanQRCode(context);},
                     icon: Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
                   ),
                   //Text(
@@ -310,6 +325,57 @@ class Homepage extends GetView<HomepageController> {
       ),
     );
   }
+
+  void scanQRCode(BuildContext context) async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+
+      if (qrCode == '-1') {
+        // User canceled the scan.
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Scan canceled.')),
+        );
+        return;
+      }
+
+      String getResult;
+      if (qrCode.isNotEmpty) {
+        // QR code was successfully scanned.
+        getResult = qrCode;
+        print("QRCode_Result: $qrCode");
+
+        // Check if the scanned QR code is a valid price
+        final scannedPrice = int.tryParse(qrCode);
+        if (scannedPrice != null) {
+          // Call the function to make the payment directly
+          MakePayment(ctx: context, email: "ckamoga23@gmail.com", price: scannedPrice)
+              .chargeCardAndMakePayment();
+          return;
+        }
+      }
+
+      // If the code reaches here, it means the QR code format is invalid
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Invalid QR code format: $qrCode"),
+        ),
+      );
+    } on PlatformException {
+      // If an exception occurs, handle it and show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to scan QR Code.'),
+        ),
+      );
+    }
+  }
+
+
 
   Widget renderMap() {
     return Obx(() => (controller.isLoading.value)

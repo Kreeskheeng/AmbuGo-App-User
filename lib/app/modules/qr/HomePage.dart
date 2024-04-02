@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'QR Generator/QRGenerator.dart';
-import 'QR Scanner/ScanQR.dart';
+
 
 class QrPage extends StatefulWidget {
   static const route='/QrPage';
@@ -58,10 +58,7 @@ class _QrPageState extends State<QrPage> {
                               style: TextStyle(fontSize: 17),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ScanQR()));
+
                             },
                           ),
                         ),

@@ -21,6 +21,11 @@ import '../../../../helper/shared_preference.dart';
 
 
 class HomepageController extends GetxController {
+  RxString qrCodeResult = 'QR Code Result'.obs;
+
+  void updateQRCodeResult(String result) {
+    qrCodeResult.value = result;
+  }
   RxBool isLoading = true.obs;
   Location location = Location();
   LocationData? currentLocation;

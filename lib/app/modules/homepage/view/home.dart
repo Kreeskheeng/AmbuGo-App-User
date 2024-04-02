@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../wallet/main.dart';
+
 import 'homepage.dart';
 
 
@@ -95,7 +95,7 @@ class AmbulanceGoApp extends StatelessWidget {
                     context,
                     'Mobile\nWallet',
                     'assets/images/walleticon.png',
-                        () => Get.to(Wallet()), // Updated onTap function
+                        () => Get.to(Homepage()), // Updated onTap function
                   ),
                 ],
               ),
