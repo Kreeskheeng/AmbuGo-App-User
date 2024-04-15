@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:ambu_go_user/app/modules/Settingz/Setttings.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
 import 'package:ambu_go_user/app/modules/pay_stack/Payment/paystack_payment_page.dart';
@@ -140,7 +139,7 @@ class Homepage extends GetView<HomepageController> {
                 SizedBox(height: 50,),
                 Divider(color: Colors.grey.shade800),
                 ListTile(
-                    onTap: () { Get.to( Settingz());},
+                    onTap: () {},
                   leading: Icon(Iconsax.setting_2),
                   title: Text('Settings'),
                 ),
