@@ -83,14 +83,14 @@ class Homepage extends GetView<HomepageController> {
             color: Colors.grey.shade900,
             blurRadius: 20.0,
             spreadRadius: 5.0,
-            offset: Offset(-20.0, 0.0),
+            offset: const Offset(-20.0, 0.0),
           ),
         ],
         borderRadius: BorderRadius.circular(30),
       ),
       drawer: SafeArea(
         child: Container(
-          padding: EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20),
           child: ListTileTheme(
             textColor: Colors.white,
             iconColor: Colors.white,
@@ -100,7 +100,7 @@ class Homepage extends GetView<HomepageController> {
                 Container(
                   width: 80.0,
                   height: 80.0,
-                  margin: EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     left: 20,
                     top: 24.0,
                   ),
@@ -111,8 +111,8 @@ class Homepage extends GetView<HomepageController> {
                   ),
                   child: Image.asset('assets/images/king.jpg'),
                 ),
-                SizedBox(height: 10,),
-                Padding(
+                const SizedBox(height: 10,),
+                const Padding(
                   padding: EdgeInsets.only(left: 30.0),
                   child: Text(
                     "Krees Kheeng",
@@ -120,36 +120,36 @@ class Homepage extends GetView<HomepageController> {
                         color: Colors.white, fontWeight: FontWeight.w600),
                   ),
                 ),
-                Spacer(),
-                Divider(color: Colors.white70,),
+                const Spacer(),
+                const Divider(color: Colors.white70,),
                 ListTile(
                   onTap: () { Get.to( Homepage());},
-                  leading: Icon(Iconsax.home),
-                  title: Text('Dashboard'),
+                  leading: const Icon(Iconsax.home),
+                  title: const Text('Dashboard'),
                 ),
                 ListTile(
                   onTap: () {},
-                  leading: Icon(Iconsax.chart_2),
-                  title: Text('Analytics'),
+                  leading: const Icon(Iconsax.chart_2),
+                  title: const Text('Analytics'),
                 ),
                 ListTile(
                   onTap: () {},
-                  leading: Icon(Iconsax.profile_2user),
-                  title: Text('Contacts'),
+                  leading: const Icon(Iconsax.profile_2user),
+                  title: const Text('Contacts'),
                 ),
-                SizedBox(height: 50,),
+                const SizedBox(height: 50,),
                 Divider(color: Colors.grey.shade800),
                 ListTile(
-                    onTap: () { Get.to( Settingz());},
-                  leading: Icon(Iconsax.setting_2),
-                  title: Text('Settings'),
+                    onTap: () { Get.to( const Settingz());},
+                  leading: const Icon(Iconsax.setting_2),
+                  title: const Text('Settings'),
                 ),
                 ListTile(
                   onTap: () {},
-                  leading: Icon(Iconsax.support),
-                  title: Text('Support'),
+                  leading: const Icon(Iconsax.support),
+                  title: const Text('Support'),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text('                      Ambulance Go Inc.',
@@ -176,7 +176,7 @@ class Homepage extends GetView<HomepageController> {
             valueListenable: _advancedDrawerController,
             builder: (_, value, __) {
               return AnimatedSwitcher(
-                duration: Duration(milliseconds: 250),
+                duration: const Duration(milliseconds: 250),
                 child: Icon(
                   value.visible ? Iconsax.close_square : Iconsax.menu,
                   key: ValueKey<bool>(value.visible),
@@ -193,8 +193,8 @@ class Homepage extends GetView<HomepageController> {
               width: 40,
               height: 40,
             ),
-            SizedBox(width: 2.0),
-            Text(
+            const SizedBox(width: 2.0),
+            const Text(
               'Ambulance Go',
               style: TextStyle(
                 color: Colors.pink,
@@ -208,7 +208,7 @@ class Homepage extends GetView<HomepageController> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Iconsax.notification,
               color: Colors.indigo,
               size: 30,
@@ -253,21 +253,21 @@ class Homepage extends GetView<HomepageController> {
           onPressed: () {
             // Add your onPressed functionality here
           },
-          child: Icon(Iconsax.home, color: Colors.white, size: 27),
+          child: const Icon(Iconsax.home, color: Colors.white, size: 27),
           backgroundColor: Colors.indigo,
-          shape: CircleBorder(), // This makes the FloatingActionButton round
+          shape: const CircleBorder(), // This makes the FloatingActionButton round
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(// Set width of the SizedBox
 
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           color: Colors.white,
           elevation: 10,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(width: 40), // Add space on the left side
+              const SizedBox(width: 40), // Add space on the left side
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -275,14 +275,14 @@ class Homepage extends GetView<HomepageController> {
                     onPressed: () { Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PayStack(
+                          builder: (context) => const PayStack(
                             initialEmail: 'ckamoga23@gmail.com',
                             initialPrice: 5000,
                           )),
                     );
                       // was taking me to wallet
                     },
-                    icon: Icon(Iconsax.activity, size: 35, color: Colors.indigo),
+                    icon: const Icon(Iconsax.activity, size: 35, color: Colors.indigo),
                   ),
                  // Text(
                  //   'Activity',
@@ -291,25 +291,25 @@ class Homepage extends GetView<HomepageController> {
 
                 ],
               ),
-              SizedBox(width: 40), // Add more space between items
-              Expanded(
+              const SizedBox(width: 40), // Add more space between items
+              const Expanded(
                 child: SizedBox(), // Spacer to center the middle icon
               ),
-              SizedBox(
+              const SizedBox(
                 width: 70, // Set width of the SizedBox
                 height: 10, // Set height of the SizedBox
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                 ),
               ),
-              SizedBox(width: 20), // Add more space between items
+              const SizedBox(width: 20), // Add more space between items
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     onPressed: () {
                       scanQRCode(context);},
-                    icon: Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
+                    icon: const Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
                   ),
                   //Text(
                  //   'My Account',
@@ -318,7 +318,7 @@ class Homepage extends GetView<HomepageController> {
 
                 ],
               ),
-              SizedBox(width: 40), // Add space on the right side
+              const SizedBox(width: 40), // Add space on the right side
             ],
           ),
         ),
@@ -338,7 +338,7 @@ class Homepage extends GetView<HomepageController> {
       if (qrCode == '-1') {
         // User canceled the scan.
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Scan canceled.')),
+          const SnackBar(content: Text('Scan canceled.')),
         );
         return;
       }
@@ -368,7 +368,7 @@ class Homepage extends GetView<HomepageController> {
     } on PlatformException {
       // If an exception occurs, handle it and show an error message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Failed to scan QR Code.'),
         ),
       );
@@ -379,16 +379,16 @@ class Homepage extends GetView<HomepageController> {
 
   Widget renderMap() {
     return Obx(() => (controller.isLoading.value)
-        ? Center(
+        ? const Center(
       child: CircularProgressIndicator(color: AppColors.pink),
     )
         : FutureBuilder(
       future: _loadMarkerIcons(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator(color: AppColors.pink));
+          return const Center(child: CircularProgressIndicator(color: AppColors.pink));
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error loading marker icons'));
+          return const Center(child: Text('Error loading marker icons'));
         } else {
           return Stack(
             alignment: Alignment.center,

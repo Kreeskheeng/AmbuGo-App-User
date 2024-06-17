@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
+          "client_id": "408913983763-naomlu7dck69u7ci6t43bkho4f6phh2f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -40,6 +40,52 @@
             {
               "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "408913983763-3l39h9kh1hg8hfafmlejfjp6je1ieken.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lastMinute"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408913983763:android:c8c9738f056518165cc2e6",
+        "android_client_info": {
+          "package_name": "com.fast.ambulanceGo.App1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "408913983763-naomlu7dck69u7ci6t43bkho4f6phh2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZWolq9zWAH139YK8Zi9WmouYplE_sFcQ"
+        },
+        {
+          "current_key": "AIzaSyBw90ibl_dOBdI5udEKcUKq5TNk2tKsmtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "408913983763-3l39h9kh1hg8hfafmlejfjp6je1ieken.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lastMinute"
+              }
             }
           ]
         }
@@ -62,7 +108,7 @@
           }
         },
         {
-          "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
+          "client_id": "408913983763-naomlu7dck69u7ci6t43bkho4f6phh2f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -80,6 +126,13 @@
             {
               "client_id": "408913983763-3ldiuuv4iqlue0rks40nqisq1t614876.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "408913983763-3l39h9kh1hg8hfafmlejfjp6je1ieken.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.lastMinute"
+              }
             }
           ]
         }

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:ambu_go_user/app/modules/homepage/view/home.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/homepage.dart';
 import 'package:ambu_go_user/helper/loading.dart';
 import 'package:ambu_go_user/helper/shared_preference.dart';
@@ -25,7 +24,7 @@ class CreateProfileController extends GetxController {
         "city":city.text,
       }).then((value) {
         LoadingUtils.hideLoader();
-        AmbulanceGoApp.launch();
+        Homepage.launch();
       });
     } catch (e) {
       LoadingUtils.hideLoader();

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
@@ -16,30 +18,27 @@ import 'package:flutter/material.dart';
 import '../../../../helper/loading.dart';
 import '../../../../helper/shared_preference.dart';
 
-
-
-
-
 class HomepageController extends GetxController {
   RxString qrCodeResult = 'QR Code Result'.obs;
 
   void updateQRCodeResult(String result) {
     qrCodeResult.value = result;
   }
+
   RxBool isLoading = true.obs;
   Location location = Location();
   LocationData? currentLocation;
   late bool _serviceEnabled;
- // late LatLng selectedLatLng;
   late StreamController<LatLng> latLng = StreamController.broadcast();
+
   //location
   TextEditingController enterLocation = TextEditingController();
   late List<geocoding.Placemark> placemarks;
   RxString? selectedAddress = "Loading".obs;
-  onChangedselectedAddress(String addressLocation) {
+
+  void onChangedselectedAddress(String addressLocation) {
     selectedAddress!(addressLocation);
   }
-
 
   var currentMapType = Rx<MapType>(MapType.normal);
 
@@ -49,17 +48,13 @@ class HomepageController extends GetxController {
         : MapType.normal;
   }
 
-   //ride
+  //ride
   final _rideFare = ''.obs; // Store the ride fare
   String get rideFare => _rideFare.value;
 
   @override
   void onReady() {
-    // ... (your existing code)
-
-    // Retrieve the ride fare from Firebase and update the _rideFare observable
     retrieveRideFare();
-
     super.onReady();
   }
 
@@ -88,34 +83,31 @@ class HomepageController extends GetxController {
     }
   }
 
-
-
   //nextPage
-  ambulanceBookedBool(bool x) {
+  void ambulanceBookedBool(bool x) {
     _ambulanceBooked(x);
-    if(x==false){
+    if (x == false) {
       polylineCoordinates.clear();
       update();
     }
-    
   }
 
-  var driverDoc=null;
-  var emtDoc=null;
-  onGetDocuments(String driverId,String emtId)async{
-    driverDoc=await FirebaseFirestore.instance.collection('driver').doc(driverId).get();
-    if(emtId!=''){
-      emtDoc=await FirebaseFirestore.instance.collection('staff').doc(emtId).get();
-      
+  var driverDoc = null;
+  var emtDoc = null;
+
+  void onGetDocuments(String driverId, String emtId) async {
+    driverDoc = await FirebaseFirestore.instance.collection('driver').doc(driverId).get();
+    if (emtId != '') {
+      emtDoc = await FirebaseFirestore.instance.collection('staff').doc(emtId).get();
       update();
     }
-    
     update();
   }
 
   final _ambulanceBooked = false.obs;
   bool get ambulanceBooked => _ambulanceBooked.value;
-  onAmbulanceBooked(bool x) async {
+
+  void onAmbulanceBooked(bool x) async {
     LoadingUtils.showLoader();
 
     String userId = SPController().getUserId();
@@ -140,42 +132,63 @@ class HomepageController extends GetxController {
         "lng": currentLocation!.longitude,
         'time': DateTime.now().toString(),
       },
-      'rideKey':'',
+      'rideKey': '',
       'ambulanceDetails': {
         'driverId': '',
       },
-      'emtId':'',
-      'ambulanceLocation':{
-        'lat':0.0,
-        'lng':0.0,
-        'time':''
+      'emtId': '',
+      'ambulanceLocation': {
+        'lat': 0.0,
+        'lng': 0.0,
+        'time': ''
       },
       'additionalData': {
         'preferredHospital': '',
         'hospitalType': 'Private and Public',
         'emergencyType': []
       },
-      'medicalReport':{},
-      'nearest hospital':{},
+      'medicalReport': {},
+      'nearest hospital': {},
       'declinedDrivers': [], // Include an empty list for declined drivers
     });
 
     LoadingUtils.hideLoader();
     _ambulanceBooked(x);
+
+    // Notify driver
+    await notifyDriver(userId, userName);
   }
 
+  Future<void> notifyDriver(String userId, String userName) async {
+    final url = 'https://your-backend.example.com/request-ambulance';
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'userId': userId,
+        'userName': userName,
+        'location': {
+          "lat": currentLocation!.latitude,
+          "lng": currentLocation!.longitude,
+        },
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Driver notified successfully');
+    } else {
+      print('Failed to notify driver');
+    }
+  }
 
   @override
   void onInit() {
-    // latLng.stream.listen((value) {
-    //   selectedLatLng = LatLng(value.latitude, value.longitude);
-    // });
     getpermission();
     getCurrentLocation();
     super.onInit();
   }
 
-  onCameraIdle() async {
+  void onCameraIdle() async {
     log("Getting placemarks");
     placemarks = await geocoding.placemarkFromCoordinates(
         currentLocation!.latitude!, currentLocation!.longitude!);
@@ -195,7 +208,6 @@ class HomepageController extends GetxController {
     );
     location.onLocationChanged.listen((newLoc) {
       currentLocation = newLoc;
-      //googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(newLoc.latitude!,newLoc.longitude!))));
       update();
 
       if (ambulanceBooked) {
@@ -216,14 +228,15 @@ class HomepageController extends GetxController {
       }
     }
   }
-   List<LatLng> polylineCoordinates = [];
+
+  List<LatLng> polylineCoordinates = [];
+
   void getPolyPoints() async {
     polylineCoordinates.clear();
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        'AIzaSyBu60-4S559TmDx6ky9KTJ5Pl2VD0qQ4O8',
-        PointLatLng(
-            destinationLocation.latitude, destinationLocation.longitude),
+        'AIzaSyBtFdD1MNJWvqevGFtv5KgpHcgQXBusi4E',
+        PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
         PointLatLng(currentLocation!.latitude!, currentLocation!.longitude!));
 
     if (result.points.isNotEmpty) {
@@ -236,11 +249,11 @@ class HomepageController extends GetxController {
 
   final _destinationLocation = const LatLng(0, 0).obs;
   LatLng get destinationLocation => _destinationLocation.value;
-  
-  final _time=''.obs;
-  String get time=>_time.value;
 
-  onUpdateLocationFirebase(String currentTime) async {
+  final _time = ''.obs;
+  String get time => _time.value;
+
+  void onUpdateLocationFirebase(String currentTime) async {
     FirebaseFirestore.instance.collection('bookings').doc(SPController().getUserId()).update({
       'location': {
         'time': currentTime, // Use the provided current time and date
@@ -250,15 +263,14 @@ class HomepageController extends GetxController {
     });
   }
 
+  final _ambulanceAssigned = false.obs;
+  bool get ambulanceAssigned => _ambulanceAssigned.value;
 
-  final _ambulanceAssigned=false.obs;
-  bool get ambulanceAssigned=>_ambulanceAssigned.value;
-  ambulanceAssignedBool(bool x) {
-    
+  void ambulanceAssignedBool(bool x) {
     _ambulanceAssigned(x);
   }
 
-  onGetPatientLocation(double lat, double lng) async {
+  void onGetPatientLocation(double lat, double lng) async {
     _destinationLocation(LatLng(lat, lng));
     getPolyPoints();
     _ambulanceAssigned(true);
@@ -269,5 +281,4 @@ class HomepageController extends GetxController {
     getPolyPoints();
     _ambulanceAssigned(true);
   }
-
 }
