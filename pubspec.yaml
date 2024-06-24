@@ -88,6 +88,7 @@ dependencies:
   easy_settings: ^1.0.0
   dio: ^5.3.2
   logger: ^2.3.0
+  geolocator: ^8.2.0
 
 dev_dependencies:
   flutter_test:

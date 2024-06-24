@@ -41,12 +41,11 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
       String rideKey = rideInfoDoc.id;
       String time = rideInfoDoc['time'].toString();
 
-      print('Retrieved ride key: $rideKey');
-      print('Retrieved time: $time');
+
 
       // Call the appropriate function to handle rideKey and time
     } catch (e) {
-      print('Error retrieving ride info: $e');
+
     }
   }
 
@@ -81,11 +80,10 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
         //   ),
         // );
       } else {
-        // QR code scan failed.
-        print('Failed to scan QR Code.');
+        // QR code scan failed.\
       }
     } on PlatformException {
-      print('Failed to scan QR Code.');
+
     }
   }
 
@@ -126,6 +124,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                         // Open QR code scanning functionality when booking status is completed
                         _openQRCodeScanner();
                       }
+
                     }
                   }
                   // Handle UI based on booking status
@@ -153,7 +152,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
               : Container(),
           BigText(
             text:
-            'Keep updating the situations as it will help us to get you to the right hospital ASAP.',
+            'Keep updating the situations as it will help us to get you to the right hospital.',
             maxLines: null,
             size: Dimensions.font15 / 1.1,
             fontFamily: 'RedHatBold',

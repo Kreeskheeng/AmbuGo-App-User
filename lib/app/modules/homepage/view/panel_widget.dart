@@ -3,9 +3,6 @@
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'dart:ui';
-
 import '../../../../helper/shimmer.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/dimensions.dart';
@@ -31,8 +28,29 @@ class PanelWidget extends GetView<HomepageController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Align(
+              alignment: Alignment.center,
+              child: Image.asset(
+                'assets/images/ambugo.jpg', // Path to your asset image
+                height: 55, // Adjust the height as needed
+                width: 55,  // Adjust the width as needed
+              ),
+            ),
+
             SizedBox(
               height: Dimensions.height18,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: BigText(
+                text: 'Your Location',
+                color: Colors.lightGreen[900],
+                size: Dimensions.font26 * 1,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: Dimensions.height15,
             ),
             Obx(
                   () => controller.selectedAddress?.value == 'Loading'

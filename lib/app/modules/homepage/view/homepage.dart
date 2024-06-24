@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:ambu_go_user/app/modules/Settingz/Setttings.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
 import 'package:ambu_go_user/app/modules/pay_stack/Payment/paystack_payment_page.dart';
@@ -140,7 +139,7 @@ class Homepage extends GetView<HomepageController> {
                 const SizedBox(height: 50,),
                 Divider(color: Colors.grey.shade800),
                 ListTile(
-                    onTap: () { Get.to( const Settingz());},
+                    onTap: () { },
                   leading: const Icon(Iconsax.setting_2),
                   title: const Text('Settings'),
                 ),
@@ -401,7 +400,7 @@ class Homepage extends GetView<HomepageController> {
                       controller.currentLocation!.latitude!,
                       controller.currentLocation!.longitude!,
                     ),
-                    zoom: 14.5,
+                    zoom: 13.5,
                   ),
                   onCameraMove: (positioned) {
                     controller.latLng.add(positioned.target);
@@ -414,7 +413,7 @@ class Homepage extends GetView<HomepageController> {
                         },
                         markerId: const MarkerId('driverLocation'),
                         position: controller.destinationLocation,
-                        icon: _driverMarkerIcon,
+                       //icon: _driverMarkerIcon,
                       ),
                     Marker(
                       onTap: () {
@@ -425,7 +424,7 @@ class Homepage extends GetView<HomepageController> {
                         controller.currentLocation!.latitude!,
                         controller.currentLocation!.longitude!,
                       ),
-                      icon: _patientMarkerIcon,
+                      //icon: _patientMarkerIcon,
                     ),
                   },
                   polylines: {
@@ -450,8 +449,8 @@ class Homepage extends GetView<HomepageController> {
   BitmapDescriptor _patientMarkerIcon = BitmapDescriptor.defaultMarker;
 
   Future<void> _loadMarkerIcons() async {
-    _driverMarkerIcon = await _loadMarkerIcon('assets/images/pin.png');
-    _patientMarkerIcon = await _loadMarkerIcon('assets/images/patIcon.png');
+    _driverMarkerIcon = await _loadMarkerIcon('assets/images/ambulance_icon.png');
+    _patientMarkerIcon = await _loadMarkerIcon('assets/images/pointer.png');
   }
 
 }

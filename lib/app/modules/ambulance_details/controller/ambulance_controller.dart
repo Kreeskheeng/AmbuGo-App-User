@@ -21,9 +21,6 @@ class AmbulanceDetailsController extends GetxController {
   RxString nameOfDriver = 'Part-timer'.obs;
   RxString phoneNumberOfDriver = ''.obs;
 
-  //nurse details
-  RxString nameOfNurse = 'Natasha'.obs;
-  RxString phoneNumberOfNurse = ''.obs;
 
   //next page
   //final _additionaldata = false.obs;

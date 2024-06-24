@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_init_to_null
-
 import 'dart:async';
 import 'dart:developer';
 import 'dart:convert';
@@ -19,17 +17,17 @@ import '../../../../helper/loading.dart';
 import '../../../../helper/shared_preference.dart';
 
 class HomepageController extends GetxController {
-  RxString qrCodeResult = 'QR Code Result'.obs;
-
-  void updateQRCodeResult(String result) {
-    qrCodeResult.value = result;
-  }
-
   RxBool isLoading = true.obs;
   Location location = Location();
   LocationData? currentLocation;
   late bool _serviceEnabled;
   late StreamController<LatLng> latLng = StreamController.broadcast();
+
+  RxString qrCodeResult = 'QR Code Result'.obs;
+
+  void updateQRCodeResult(String result) {
+    qrCodeResult.value = result;
+  }
 
   //location
   TextEditingController enterLocation = TextEditingController();
@@ -66,14 +64,14 @@ class HomepageController extends GetxController {
           .collection('bookings')
           .doc(SPController().getUserId())
           .get();
-      String rideFare = rideInfoDoc['rideFare'].toString(); // Change the field name as per your Firestore structure
+      String rideFare =
+      rideInfoDoc['rideFare'].toString(); // Adjust as per your structure
       print('Retrieved ride fare: $rideFare');
 
       _rideFare(rideFare);
 
       if (rideInfoDoc['ambulanceStatus'] == 'completed') {
-        // Navigate to the ride_fare page
-        Get.offNamed('');
+        Get.offNamed(''); // Navigate to ride_fare page
       } else {
         // Generate and display QR code for ride fare
         //displayQRCodeInPanel(rideFare);
@@ -154,32 +152,8 @@ class HomepageController extends GetxController {
 
     LoadingUtils.hideLoader();
     _ambulanceBooked(x);
-
-    // Notify driver
-    await notifyDriver(userId, userName);
   }
 
-  Future<void> notifyDriver(String userId, String userName) async {
-    final url = 'https://your-backend.example.com/request-ambulance';
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'userId': userId,
-        'userName': userName,
-        'location': {
-          "lat": currentLocation!.latitude,
-          "lng": currentLocation!.longitude,
-        },
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      print('Driver notified successfully');
-    } else {
-      print('Failed to notify driver');
-    }
-  }
 
   @override
   void onInit() {
@@ -273,12 +247,12 @@ class HomepageController extends GetxController {
   void onGetPatientLocation(double lat, double lng) async {
     _destinationLocation(LatLng(lat, lng));
     getPolyPoints();
-    _ambulanceAssigned(true);
+   // _ambulanceAssigned(true);
 
     // Update the ambulance's location with the current time and date
     onUpdateLocationFirebase(DateTime.now().toString());
 
-    getPolyPoints();
-    _ambulanceAssigned(true);
+   // getPolyPoints();
+    //_ambulanceAssigned(true);
   }
 }
