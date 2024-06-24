@@ -13,6 +13,7 @@ import 'package:ambu_go_user/app/modules/ambulance_details/controller/ambulance_
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import '../../../../widgets/button.dart';
 import '../../homepage/view/homepage.dart';
+import '../../pay_stack/Payment/paystack_payment_page.dart';
 
 class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
   HomepageController homepageController = Get.find();
@@ -123,7 +124,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                           booking['userId'] == SPController().getUserId()) {
                         completed = true;
                         // Open QR code scanning functionality when booking status is completed
-                        _openQRCodeScanner();
+                        scanQRCode(context);
                       }
 
                     }
@@ -186,17 +187,57 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
     );
   }
 
-  // Method to open QR code scanner
-  void _openQRCodeScanner() {
-    // Add your logic to open QR code scanner
-    // For example, you can use a navigation to another screen
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => QRCodeScannerScreen(),
-    //   ),
-    // );
+  void scanQRCode(context) async {
+    try {
+      final qrCode = await FlutterBarcodeScanner.scanBarcode(
+        '#ff6666',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+
+      if (qrCode == '-1') {
+        // User canceled the scan.
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Scan canceled.')),
+        );
+        return;
+      }
+
+      String getResult;
+      if (qrCode.isNotEmpty) {
+        // QR code was successfully scanned.
+        getResult = qrCode;
+
+
+        // Check if the scanned QR code is a valid price
+        final scannedPrice = int.tryParse(qrCode);
+        if (scannedPrice != null) {
+          // Call the function to make the payment directly
+          MakePayment(ctx: context, email: "ckamoga23@gmail.com", price: scannedPrice)
+              .chargeCardAndMakePayment();
+          return;
+        }
+      }
+
+      // If the code reaches here, it means the QR code format is invalid
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Invalid QR code format: $qrCode"),
+        ),
+      );
+    } on PlatformException {
+      // If an exception occurs, handle it and show an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to scan QR Code.'),
+        ),
+      );
+    }
   }
+
+
+
 
   // Method to build UI when booking status is completed
   Widget _buildCompletedUI(List bookingAmbulance) {
