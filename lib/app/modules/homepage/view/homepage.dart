@@ -66,27 +66,6 @@ class Homepage extends GetView<HomepageController> {
     return BitmapDescriptor.fromBytes(byteList);
   }
 
-  // Add this to your Homepage class
-  @override
-  void initState() {
-    initState();
-    _listenToFirestoreChanges();
-  }
-
-  void _listenToFirestoreChanges() {
-    // Assuming you have a userId to listen for their document
-    final String userId = 'user_document_id'; // Replace with actual user ID
-
-    FirebaseFirestore.instance.collection('bookings').doc(userId).snapshots().listen((snapshot) {
-      if (snapshot.exists) {
-        final data = snapshot.data();
-        if (data != null && data['ambulanceStatus'] == 'complete') {
-          // Trigger QR code scan
-          scanQRCode(context);
-        }
-      }
-    });
-  }
 
 
   @override
@@ -331,7 +310,7 @@ class Homepage extends GetView<HomepageController> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      scanQRCode(context);},
+                      },
                     icon: const Icon(Iconsax.personalcard, size: 35, color: Colors.indigo),
                   ),
                   //Text(
