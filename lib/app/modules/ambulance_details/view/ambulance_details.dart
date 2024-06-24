@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:ambu_go_user/app/modules/ambulance_details/controller/ambulance_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import '../../../../widgets/button.dart';
+import '../../homepage/view/homepage.dart';
 
 class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
   HomepageController homepageController = Get.find();
@@ -64,7 +65,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
         print('Scan canceled.');
       } else if (qrCode.isNotEmpty) {
         // QR code was successfully scanned.
-        print('Scanned QR Code: $qrCode');
+
 
         // Save the scanned QR code result to Firestore
         await FirebaseFirestore.instance.collection('scanned_codes').add({
@@ -129,7 +130,7 @@ class AmbulanceDetails extends GetView<AmbulanceDetailsController> {
                   }
                   // Handle UI based on booking status
                   return completed
-                      ? _buildCompletedUI(bookingAmbulance)
+                      ? Homepage()
                       : _buildSearchingUI();
                 },
               ),

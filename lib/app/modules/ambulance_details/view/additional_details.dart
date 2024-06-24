@@ -1,11 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ambu_go_user/app/modules/ambulance_details/controller/ambulance_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:lottie/lottie.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../helper/shared_preference.dart';
 import '../../../../utils/colors.dart';
 import '../../../../utils/dimensions.dart';
@@ -14,12 +12,10 @@ import '../../../../widgets/button.dart';
 import '../../../../widgets/drop_down.dart';
 import '../../../../widgets/text_field.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:location/location.dart'; // Import location package
 
 class AdditionalData extends GetView<AmbulanceDetailsController> {
   HomepageController homepageController = Get.find();
   ScrollController scrollController;
-  LocationData? _currentLocation;
 
   AdditionalData({super.key, required this.scrollController});
 
@@ -31,70 +27,6 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
       // Handle error: unable to launch the phone call.
       print('Error launching phone call');
     }
-  }
-
-  // Function to calculate distance between two coordinates using Haversine formula
-  double calculateDistance(double startLat, double startLng, double endLat, double endLng) {
-    const R = 6371.0; // Earth radius in kilometers
-    final latDistance = _toRadians(endLat - startLat);
-    final lngDistance = _toRadians(endLng - startLng);
-    final a = sin(latDistance / 2) * sin(latDistance / 2) +
-        cos(_toRadians(startLat)) * cos(_toRadians(endLat)) *
-            sin(lngDistance / 2) * sin(lngDistance / 2);
-    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-    final distance = R * c;
-    return distance; // Distance in kilometers
-  }
-
-  // Function to convert degrees to radians
-  double _toRadians(double deg) => deg * (pi / 180.0);
-
-  // Function to get current location
-  Future<void> _getCurrentLocation() async {
-    Location location = Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _currentLocation = await location.getLocation();
-  }
-
-  // Function to calculate estimated arrival time based on distance and average speed
-  String calculateEstimatedArrivalTime(
-      Timestamp ambulanceTime, double ambulanceLat, double ambulanceLng) {
-    if (_currentLocation == null) {
-      return 'Location not available'; // Handle case where location is not available
-    }
-
-    // Example logic: Calculate estimated time based on average speed
-    // Assuming average speed of 60 km/h for simplicity
-    double averageSpeed = 60.0; // km/h
-    double distanceInKm = calculateDistance(
-        ambulanceLat, ambulanceLng, _currentLocation!.latitude!, _currentLocation!.longitude!);
-    int estimatedMinutes = (distanceInKm / averageSpeed * 60).round();
-
-    // Calculate arrival time by adding estimated minutes to ambulance dispatch time
-    DateTime dispatchDateTime = ambulanceTime.toDate();
-    DateTime estimatedArrivalDateTime = dispatchDateTime.add(Duration(minutes: estimatedMinutes));
-
-    // Format estimated arrival time to desired format
-    String formattedTime = '${estimatedArrivalDateTime.hour}:${estimatedArrivalDateTime.minute}';
-    return formattedTime;
   }
 
   @override
@@ -110,6 +42,7 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // StreamBuilder to listen for changes in Firestore
                   StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('bookings').snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -119,10 +52,12 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       }
+                      // Extract the relevant booking data
                       final bookings = snapshot.data!.docs;
                       List<Map<String, dynamic>> bookingAmbulance = [];
                       bool completed = false;
 
+                      // Iterate through the bookings to find relevant data
                       for (var booking in bookings) {
                         if (booking['ambulanceStatus'] == 'assigned' &&
                             booking['userId'] == SPController().getUserId()) {
@@ -140,12 +75,14 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                         }
                       }
 
+                      // If booking is completed, update state
                       if (completed) {
                         homepageController.ambulanceAssignedBool(false);
                         controller.onInformationUpdated(false);
                         homepageController.ambulanceBookedBool(false);
                       }
 
+                      // Check if data is available to display
                       if (bookingAmbulance.isNotEmpty && homepageController.driverDoc != null) {
                         return Column(
                           children: [
@@ -177,20 +114,10 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                               ),
                             ),
                             SizedBox(height: Dimensions.height20 * 1.5),
-                            // Display estimated arrival time using the function
+                            // Display estimated arrival time from Firestore
                             Button(
-                              on_pressed: () async {
-                                await _getCurrentLocation(); // Fetch current location
-                                if (_currentLocation != null) {
-                                  String estimatedTime = calculateEstimatedArrivalTime(
-                                    bookingAmbulance[0]['ambulanceLocation']['time'],
-                                    bookingAmbulance[0]['ambulanceLocation']['lat'],
-                                    bookingAmbulance[0]['ambulanceLocation']['lng'],
-                                  );
-                                 
-                                }
-                              },
-                              text: 'Fetch Estimated Arrival Time',
+                              on_pressed: () {},
+                              text: 'Estimated Arrival: ${bookingAmbulance[0]['ambulanceLocation']['time']}',
                               color: AppColors.white,
                               textColor: AppColors.black,
                               width: Dimensions.width40 * 6,
@@ -315,10 +242,11 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                                   'https://png.pngtree.com/png-vector/20220712/ourmid/pngtree-ambulance-vector-design-png-image_5892369.png'),
                             ),
                             BigText(
-                              text: "Don't Panic! We are trying our best to find an ambulance.",
+                              text:
+                              "Don't Panic! We are trying our best to find an ambulance.",
                               color: AppColors.black,
                               maxLines: null,
-                            )
+                            ),
                           ],
                         );
                       }
@@ -328,7 +256,7 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                   Align(
                     alignment: Alignment.center,
                     child: BigText(
-                      text: 'Additional information',
+                      text: 'Additional Information',
                       color: Colors.lightGreen[900],
                       size: Dimensions.font26 * 1,
                       fontWeight: FontWeight.bold,
@@ -339,6 +267,7 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                     color: AppColors.lightGrey,
                     height: 40,
                   ),
+                  // Your additional widgets for hospital type, emergency type, etc.
                   Text_Field(
                     radius: Dimensions.radius20,
                     text_field_width: double.maxFinite,
@@ -361,13 +290,13 @@ class AdditionalData extends GetView<AmbulanceDetailsController> {
                     height: Dimensions.height20 * 3,
                     name: 'Plans',
                     value: controller.value,
-                    items: controller.dropDownList.map((String items) {
-                      return DropdownMenuItem(
-                        alignment: Alignment.center,
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
+                    items: controller.dropDownList
+                        .map((String items) => DropdownMenuItem(
+                      alignment: Alignment.center,
+                      value: items,
+                      child: Text(items),
+                    ))
+                        .toList(),
                     onChanged: (newValue) {
                       controller.onChangedHospitalType(newValue.toString());
                     },

@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:js';
 import 'dart:typed_data';
 import 'package:ambu_go_user/app/modules/homepage/controller/homepage_controller.dart';
 import 'package:ambu_go_user/app/modules/homepage/view/panel_widget.dart';
 import 'package:ambu_go_user/app/modules/pay_stack/Payment/paystack_payment_page.dart';
 import 'package:ambu_go_user/app/modules/pay_stack/main.dart';
 import 'package:ambu_go_user/app/modules/qr/QR%20Generator/QRGenerator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -62,6 +64,28 @@ class Homepage extends GetView<HomepageController> {
     final ByteData byteData = await rootBundle.load(assetPath);
     final Uint8List byteList = byteData.buffer.asUint8List();
     return BitmapDescriptor.fromBytes(byteList);
+  }
+
+  // Add this to your Homepage class
+  @override
+  void initState() {
+    initState();
+    _listenToFirestoreChanges();
+  }
+
+  void _listenToFirestoreChanges() {
+    // Assuming you have a userId to listen for their document
+    final String userId = 'user_document_id'; // Replace with actual user ID
+
+    FirebaseFirestore.instance.collection('bookings').doc(userId).snapshots().listen((snapshot) {
+      if (snapshot.exists) {
+        final data = snapshot.data();
+        if (data != null && data['ambulanceStatus'] == 'complete') {
+          // Trigger QR code scan
+          scanQRCode(context);
+        }
+      }
+    });
   }
 
 
@@ -325,7 +349,7 @@ class Homepage extends GetView<HomepageController> {
     );
   }
 
-  void scanQRCode(BuildContext context) async {
+  void scanQRCode(context) async {
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
         '#ff6666',
@@ -346,7 +370,7 @@ class Homepage extends GetView<HomepageController> {
       if (qrCode.isNotEmpty) {
         // QR code was successfully scanned.
         getResult = qrCode;
-        print("QRCode_Result: $qrCode");
+
 
         // Check if the scanned QR code is a valid price
         final scannedPrice = int.tryParse(qrCode);

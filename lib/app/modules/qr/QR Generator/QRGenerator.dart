@@ -155,7 +155,7 @@ class _QRGeneratorState extends State<QRGenerator> {
   }
 
   void navigate() {
-    print(mycontroller.text);
+
     Navigator.push(
         context,
         MaterialPageRoute(
